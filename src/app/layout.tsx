@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Xai - Intelligence Workspace",
+  title: "Linkora - Intelligence Workspace",
   description: "From raw data to actionable insight in milliseconds.",
 };
 

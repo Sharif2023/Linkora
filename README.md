@@ -1,7 +1,7 @@
-# Xai – Intelligence Workspace
+# Linkora – Intelligence Workspace
 
 ## Project Overview
-Xai is a conceptual high-fidelity interactive product experience designed to demonstrate the transformation of raw data into structured intelligence and actionable insight. The UI is built to feel calm but powerful, technically confident, and designed specifically for decision-makers—mirroring the premium aesthetic of top-tier SaaS products like Stripe, Linear, and Vercel. 
+Linkora is a conceptual high-fidelity interactive product experience designed to demonstrate the transformation of raw data into structured intelligence and actionable insight. The UI is built to feel calm but powerful, technically confident, and designed specifically for decision-makers—mirroring the premium aesthetic of top-tier SaaS products like Stripe, Linear, and Vercel. 
 
 The core narrative walks the user through three key stages:
 1. **Ingest Data**: High-throughput ingestion of raw streams.
@@ -9,9 +9,9 @@ The core narrative walks the user through three key stages:
 3. **Generate Insight & Automate**: Extracting human-readable intelligence and triggering workflows.
 
 ## Project Links
-- **Figma Design**: [Xai Intelligence Workspace (Figma)](https://www.figma.com/design/WZPVsScGtrJF4cSCyJa4LD/Xai-Intelligent-Workshop?node-id=0-1&t=VHHnZAxcEdId1NEt-1)
+- **Figma Design**: [Linkora Intelligence Workspace (Figma)](https://www.figma.com/design/WZPVsScGtrJF4cSCyJa4LD/Xai-Intelligent-Workshop?node-id=0-1&t=VHHnZAxcEdId1NEt-1)
 - **Explanation Video**: [Watch on Google Drive](https://drive.google.com/file/d/1mckMK4fnpM8QT14zm3tWBETQJEjnduYq/view?usp=sharing)
-- **Live Deployment**: [https://xai-intelligence-psi.vercel.app](https://xai-intelligence-psi.vercel.app)
+- **Live Deployment**: [https://linkora-intelligence.vercel.app](https://linkora-intelligence.vercel.app)
 
 ## Technical Approach & Stack
 This project was engineered with a strict focus on UI/UX clarity, modular component structure, and advanced 3D motion.

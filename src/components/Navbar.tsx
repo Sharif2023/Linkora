@@ -12,7 +12,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-extrabold text-xl tracking-tight text-white">Xai</span>
+          <span className="font-extrabold text-xl tracking-tight text-white">Linkora</span>
           <span className="px-2 py-0.5 rounded bg-white/10 text-[10px] font-bold text-[#888] uppercase tracking-wider">
             Intelligence
           </span>

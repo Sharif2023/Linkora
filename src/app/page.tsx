@@ -19,30 +19,30 @@ const ThreeVisual = dynamic(() => import("@/components/ThreeVisual"), { ssr: fal
 
 // ─── Terminal data ──────────────────────────────────────────────────────────
 const terminalLines = [
-  { time: "[14:02:01]", text: "$ xai connect --source postgres_main" },
-  { time: "[14:02:02]", text: "Analyzing schema structure... OK", color: "#ffffff" },
-  { time: "[14:02:04]", text: "Streaming 4.2M records...", color: "#3b82f6" },
-  { time: "[14:02:05]", text: "Ingestion active. 14,021 ops/sec", color: "#a855f7", blink: true },
+  { time: "[14:02:01]", text: "$ linkora add https://chatgpt.com --category AI_Tools" },
+  { time: "[14:02:02]", text: "Fetching site metadata... OK", color: "#ffffff" },
+  { time: "[14:02:04]", text: "Generating smart tags: [LLM, chatbot, openai]...", color: "#3b82f6" },
+  { time: "[14:02:05]", text: "Saved successfully. 120ms total time", color: "#a855f7", blink: true },
 ];
 
 // ─── Model card ──────────────────────────────────────────────────────────────
-function ModelCard() {
+function LinkEngineCard() {
   return (
     <>
       <div className="p-5 border-b border-[#333] flex justify-between items-center">
         <div className="font-semibold text-lg flex items-center gap-2">
           <BrainCircuit size={17} />
-          model.transformer_v4
+          engine.tagger_v2
         </div>
         <div className="bg-[#27c93f]/10 text-[#27c93f] px-3 py-1 rounded-full text-xs font-semibold">
-          Active
+          Ready
         </div>
       </div>
       <div className="p-5 grid grid-cols-2 gap-3 flex-1">
-        <MetricCard label="Confidence" value="0.962" valueColor="text-[#27c93f]" />
-        <MetricCard label="Data Drift" value="0.003" valueColor="text-[#ffbd2e]" />
-        <MetricCard label="Parameters" value="1.2B" />
-        <MetricCard label="Inference" value="12ms" />
+        <MetricCard label="Tagging Accuracy" value="99.4%" valueColor="text-[#27c93f]" />
+        <MetricCard label="Link Health" value="100%" valueColor="text-[#27c93f]" />
+        <MetricCard label="Active Tags" value="382" />
+        <MetricCard label="Tagging Speed" value="84ms" />
       </div>
     </>
   );
@@ -50,10 +50,10 @@ function ModelCard() {
 
 // ─── Hero stats ──────────────────────────────────────────────────────────────
 const heroStats = [
-  { value: "2.4M+", label: "Events / sec" },
-  { value: "18ms", label: "P99 Latency" },
-  { value: "99.99%", label: "Uptime" },
-  { value: "340+", label: "Automations" },
+  { value: "10k+", label: "Saved Links" },
+  { value: "50+", label: "Smart Collections" },
+  { value: "140ms", label: "Avg Access Speed" },
+  { value: "100%", label: "Cloud Synced" },
 ];
 
 export default function Home() {
@@ -95,7 +95,7 @@ export default function Home() {
           transition={{ duration: 0.7 }}
           className="relative z-10 bg-white/5 border border-white/10 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium mb-8 text-[#888]"
         >
-          ● Now in Private Beta — Intelligence Workspace v2.0
+          ● Now in Private Beta — Linkora Workspace v2.0
         </motion.div>
 
         <motion.h1
@@ -104,9 +104,9 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="relative z-10 text-[clamp(2.8rem,6vw,5rem)] font-extrabold tracking-tight leading-[1.08] max-w-3xl mb-6 pointer-events-none"
         >
-          Raw Data to{" "}
+          All Your AI Links in{" "}
           <span className="bg-gradient-to-r from-white to-[#aaa] bg-clip-text text-transparent">
-            Structured Intelligence
+            One Smart Workspace
           </span>
         </motion.h1>
 
@@ -116,8 +116,8 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="relative z-10 text-lg text-[#888] max-w-xl leading-relaxed mb-12 pointer-events-none"
         >
-          Xai transforms your raw data streams into actionable intelligence through adaptive AI
-          models — giving decision-makers clarity at every layer.
+          Linkora organizes, categorizes, and speed-dials all your AI tools and essential web links
+          — giving developers and teams one-click clarity.
         </motion.p>
 
         <motion.div
@@ -167,17 +167,17 @@ export default function Home() {
         <StageCard
           stageNum="Stage 01"
           labelColor="cyan"
-          title="Ingest Data"
-          description="Connect securely to any datastore. Our high-throughput ingestion engine automatically identifies schema shifts and normalises messy data streams in real-time."
+          title="Collect & Save Links"
+          description="Add links instantly from your browser, slack, or terminal. Our high-performance ingestion engine automatically extracts clean metadata, titles, and descriptions in real-time."
           visual={<TerminalMockup lines={terminalLines} />}
         />
 
         <StageCard
           stageNum="Stage 02"
           labelColor="purple"
-          title="Analyze with AI"
-          description="Leverage custom transformer models to detect anomalies, classify unstructured text, and predict future trends without writing a single line of Python."
-          visual={<ModelCard />}
+          title="AI-Powered Categorization"
+          description="Leverage integrated tagger models to automatically organize saved bookmarks into smart categories, identify dead links, and auto-generate summaries."
+          visual={<LinkEngineCard />}
           direction="reverse"
         />
 
@@ -193,15 +193,14 @@ export default function Home() {
             <div className="inline-block px-3 py-1 rounded bg-[#3b82f6]/10 text-[#3b82f6] border border-[#3b82f6]/20 text-xs font-bold tracking-widest uppercase mb-4">
               Stage 03
             </div>
-            <h2 className="text-4xl font-bold mb-4 tracking-tight">Generate Insight & Automate</h2>
+            <h2 className="text-4xl font-bold mb-4 tracking-tight">Sync, Search & Share</h2>
             <p className="text-[#888] text-lg leading-relaxed">
-              Drive business value instantly. Xai generates human-readable reports and triggers
-              webhooks to automate workflows based on model predictions.
+              Access your bookmark hub securely from any device. Export collections, share curated resource boards, or search your saved links database in real-time.
             </p>
           </div>
 
           <div className="w-full grid grid-cols-2 gap-5">
-            {/* Webhook card */}
+            {/* API Sync card */}
             <motion.div
               whileHover={{ scale: 1.02, borderColor: "rgba(59,130,246,0.5)" }}
               transition={{ duration: 0.25 }}
@@ -212,18 +211,18 @@ export default function Home() {
                   <Zap size={22} />
                 </div>
                 <div>
-                  <h3 className="font-bold">Automated Webhooks</h3>
-                  <p className="text-sm text-[#888]">Triggered on anomaly detection</p>
+                  <h3 className="font-bold">Developer API & Sync</h3>
+                  <p className="text-sm text-[#888]">Sync links to your own terminal and scripts</p>
                 </div>
               </div>
               <div className="font-mono text-xs text-[#888] bg-[#111] p-4 rounded-lg border border-[#222] leading-loose">
-                <span className="text-[#3b82f6]">POST</span> /api/webhooks/alert
+                <span className="text-[#3b82f6]">POST</span> /api/v1/links
                 <br />
-                <span className="text-[#0ea5e9]">{`{ "status": "anomaly", "confidence": 0.98 }`}</span>
+                <span className="text-[#0ea5e9]">{`{ "url": "https://openai.com", "category": "AI" }`}</span>
               </div>
             </motion.div>
 
-            {/* Brief card */}
+            {/* Curation summaries card */}
             <motion.div
               whileHover={{ scale: 1.02, borderColor: "rgba(168,85,247,0.5)" }}
               transition={{ duration: 0.25 }}
@@ -234,14 +233,12 @@ export default function Home() {
                   <FileText size={22} />
                 </div>
                 <div>
-                  <h3 className="font-bold">Natural Language Briefs</h3>
-                  <p className="text-sm text-[#888]">Executive summaries on demand</p>
+                  <h3 className="font-bold">Weekly Curated Digest</h3>
+                  <p className="text-sm text-[#888]">AI-generated summaries of saved topics</p>
                 </div>
               </div>
               <div className="text-sm text-[#888] bg-[#111] p-4 rounded-lg border border-[#222] leading-relaxed">
-                "In the last 24 hours,{" "}
-                <strong className="text-white">user engagement dropped 14%</strong>. The model
-                identified a latency spike in EU-West as the primary root cause."
+                "This week, you saved <strong className="text-white">12 new AI platforms</strong>. Your focus was primarily on vector databases, multi-modal reasoning models, and WebGL optimization toolkits."
               </div>
             </motion.div>
           </div>

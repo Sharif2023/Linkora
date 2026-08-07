@@ -20,7 +20,7 @@ export default function TerminalMockup({ lines }: TerminalMockupProps) {
         <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
         <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
         <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-        <span className="ml-3 text-[#555] text-xs font-mono">xai-ingest — terminal</span>
+        <span className="ml-3 text-[#555] text-xs font-mono">linkora-ingest — terminal</span>
       </div>
       <div className="p-6 font-mono text-sm text-[#a8cc8c] flex flex-col gap-3 flex-1">
         {lines.map((line, i) =>
