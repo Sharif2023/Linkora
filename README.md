@@ -24,21 +24,5 @@ This project was engineered with a strict focus on UI/UX clarity, optimal React 
 ## 🌐 Live Deployment
 - **Live URL**: [https://linkora.vercel.app](https://linkora.vercel.app) (Update link if deployed elsewhere)
 
-## 💻 Running the Project Locally
-
-1. **Clone & Install Dependencies**
-   Ensure you have Node.js installed. Run the following command in the root directory:
-   ```bash
-   npm install
-   ```
-
-2. **Start the Development Server**
-   ```bash
-   npm run dev
-   ```
-
-3. **View the Application**
-   Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the interactive directory.
-
 ---
 *Designed & Built by [Shariful Islam](https://si-sharif.vercel.app/)*
