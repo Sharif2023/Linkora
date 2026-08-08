@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ExternalLink, Copy, Check, ArrowLeft, Bookmark, Filter, RefreshCw, ChevronDown, ListFilter, Video, BookOpen, BarChart2, Shield, Utensils, Gamepad2, Wrench, HeartHandshake, Archive, Globe } from "lucide-react";
 import Link from "next/link";
@@ -42,6 +42,21 @@ export default function CollectionsDirectory() {
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const [isFiltering, setIsFiltering] = useState(false);
+  const [showScrollSearch, setShowScrollSearch] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollSearch(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScrollToSearch = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(() => searchInputRef.current?.focus(), 500);
+  };
 
   useEffect(() => {
     setIsFiltering(true);
@@ -273,6 +288,7 @@ export default function CollectionsDirectory() {
             <div className="relative mb-6">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#555]" size={18} />
               <input
+                ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -421,6 +437,22 @@ export default function CollectionsDirectory() {
           </div>
         </div>
       </main>
+
+      {/* Floating Search Icon */}
+      <AnimatePresence>
+        {showScrollSearch && (
+          <motion.button
+            initial={{ opacity: 0, y: -20, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.8 }}
+            onClick={handleScrollToSearch}
+            className="fixed top-10 right-4 md:right-8 lg:right-12 z-50 p-3.5 bg-black text-[#888] hover:text-white rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.8)] hover:bg-[#111] hover:border-[#555] hover:scale-105 active:scale-95 transition-all border border-[#222]"
+            title="Search Links"
+          >
+            <Search size={20} />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Footer */}
       <footer className="border-t border-[#111] py-8 text-center text-xs text-[#555] font-mono relative z-10 bg-black mt-24">

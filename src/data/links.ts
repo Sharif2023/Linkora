@@ -281,9 +281,9 @@ export const linkCollections: LinkItem[] = [
   },
   {
     "title": "DeepSite",
-    "url": "https://enzostvs",
+    "url": "https://enzostvs-deepsite.hf.space/",
     "category": "ai-coding-builders",
-    "description": "deepsite.hf.space/ — AI website builder",
+    "description": "AI website builder",
     "tags": [
       "Coding",
       "AI Web Builder"
@@ -870,16 +870,6 @@ export const linkCollections: LinkItem[] = [
     ]
   },
   {
-    "title": "Paper Animator",
-    "url": "https://paperanimator.com/",
-    "category": "ai-video-avatar",
-    "description": "Create animated text videos",
-    "tags": [
-      "AI Video",
-      "Voice Clone"
-    ]
-  },
-  {
     "title": "Voicebox",
     "url": "https://voicebox.sh/",
     "category": "ai-video-avatar",
@@ -921,7 +911,7 @@ export const linkCollections: LinkItem[] = [
   },
   {
     "title": "Baidu",
-    "url": "baidu.com",
+    "url": "https://www.baidu.com/",
     "category": "ai-video-avatar",
     "description": "each day free 10 ai videos",
     "tags": [
@@ -944,36 +934,6 @@ export const linkCollections: LinkItem[] = [
     "url": "https://vocalremover.org/",
     "category": "music-audio",
     "description": "Remove vocals from music",
-    "tags": [
-      "AI Music",
-      "Sound"
-    ]
-  },
-  {
-    "title": "Soundraw",
-    "url": "https://soundraw.io/",
-    "category": "music-audio",
-    "description": "AI music generation",
-    "tags": [
-      "AI Music",
-      "Sound"
-    ]
-  },
-  {
-    "title": "Suno",
-    "url": "https://suno.com/",
-    "category": "music-audio",
-    "description": "AI music generation",
-    "tags": [
-      "AI Music",
-      "Sound"
-    ]
-  },
-  {
-    "title": "MusicGPT",
-    "url": "https://musicgpt.com/",
-    "category": "music-audio",
-    "description": "Generate music",
     "tags": [
       "AI Music",
       "Sound"
@@ -1030,20 +990,10 @@ export const linkCollections: LinkItem[] = [
     ]
   },
   {
-    "title": "Video Effects",
-    "url": "https://videoeffects.com/",
-    "category": "video-screen-recording",
-    "description": "Video effects",
-    "tags": [
-      "Recorder",
-      "Video"
-    ]
-  },
-  {
     "title": "Window Swap",
-    "url": "http://window",
+    "url": "http://window-swap.com/",
     "category": "video-screen-recording",
-    "description": "swap.com/ — View cc camera scenes from cameras around the world",
+    "description": "View cc camera scenes from cameras around the world",
     "tags": [
       "Recorder",
       "Video"
@@ -1081,9 +1031,9 @@ export const linkCollections: LinkItem[] = [
   },
   {
     "title": "Learn Anything",
-    "url": "https://learn",
+    "url": "https://learn-anything.xyz/",
     "category": "learning-dev-resources",
-    "description": "anything.xyz/ — Learn topics step by step",
+    "description": "Learn topics step by step",
     "tags": [
       "Education",
       "Guides"
@@ -1321,9 +1271,9 @@ export const linkCollections: LinkItem[] = [
   },
   {
     "title": "Web Check",
-    "url": "https://web",
+    "url": "https://web-check.xyz/",
     "category": "website-security-utilities",
-    "description": "check.xyz/ — Deep scan websites",
+    "description": "Deep scan websites",
     "tags": [
       "Security",
       "Network"
@@ -1370,16 +1320,6 @@ export const linkCollections: LinkItem[] = [
     ]
   },
   {
-    "title": "Window Swap",
-    "url": "http://window",
-    "category": "website-security-utilities",
-    "description": "swap.com/ — Explore cc tv camera views from around the world",
-    "tags": [
-      "Security",
-      "Network"
-    ]
-  },
-  {
     "title": "Snowglobe",
     "url": "https://snowglobe.so/",
     "category": "website-security-utilities",
@@ -1394,16 +1334,6 @@ export const linkCollections: LinkItem[] = [
     "url": "https://myfridgefood.com/",
     "category": "food-everyday-utilities",
     "description": "Find recipes based on ingredients",
-    "tags": [
-      "Lifestyle",
-      "Food"
-    ]
-  },
-  {
-    "title": "AutoDraw",
-    "url": "https://autodraw.com/",
-    "category": "food-everyday-utilities",
-    "description": "Turn sketches into drawings",
     "tags": [
       "Lifestyle",
       "Food"
@@ -1427,66 +1357,6 @@ export const linkCollections: LinkItem[] = [
     "tags": [
       "Game",
       "Media"
-    ]
-  },
-  {
-    "title": "Window Swap",
-    "url": "http://window",
-    "category": "games-entertainment",
-    "description": "swap.com/ — Explore places through public cameras",
-    "tags": [
-      "Game",
-      "Media"
-    ]
-  },
-  {
-    "title": "Neapay",
-    "url": "https://neapay.com/",
-    "category": "testing-dev-utilities",
-    "description": "Generate test bank card numbers",
-    "tags": [
-      "DevOps",
-      "Testing"
-    ]
-  },
-  {
-    "title": "PostgREST",
-    "url": "https://github.com/PostgREST/postgrest",
-    "category": "testing-dev-utilities",
-    "description": "PostgreSQL to REST API",
-    "tags": [
-      "DevOps",
-      "Testing"
-    ]
-  },
-  {
-    "title": "Coolify",
-    "url": "https://coolify.io/",
-    "category": "testing-dev-utilities",
-    "description": "Deploy applications",
-    "tags": [
-      "DevOps",
-      "Testing"
-    ]
-  },
-  {
-    "title": "n8n",
-    "url": "https://n8n.io/",
-    "category": "testing-dev-utilities",
-    "description": "Automate workflows and AI agents",
-    "tags": [
-      "DevOps",
-      "Testing"
-    ]
-  },
-  {
-    "title": "DevDocs",
-    "url": "https://devdocs.io/",
-    "category": "testing-dev-utilities",
-    "description": "Programming documentation",
-    "tags": [
-      "DevOps",
-      "Testing"
     ]
   },
   {
@@ -1540,76 +1410,6 @@ export const linkCollections: LinkItem[] = [
     ]
   },
   {
-    "title": "Window Swap",
-    "url": "http://window",
-    "category": "miscellaneous-tools",
-    "description": "swap.com/ — Explore locations through cameras",
-    "tags": [
-      "Utilities",
-      "General"
-    ]
-  },
-  {
-    "title": "iFixit",
-    "url": "https://ifixit.com/",
-    "category": "miscellaneous-tools",
-    "description": "Repair guides",
-    "tags": [
-      "Utilities",
-      "General"
-    ]
-  },
-  {
-    "title": "Fastpedia",
-    "url": "https://fastpedia.io/",
-    "category": "miscellaneous-tools",
-    "description": "AI tool directory",
-    "tags": [
-      "Utilities",
-      "General"
-    ]
-  },
-  {
-    "title": "Uiverse",
-    "url": "https://uiverse.io/",
-    "category": "miscellaneous-tools",
-    "description": "Open — source UI components",
-    "tags": [
-      "Utilities",
-      "General"
-    ]
-  },
-  {
-    "title": "Storyset",
-    "url": "https://storyset.com/",
-    "category": "miscellaneous-tools",
-    "description": "Free illustrations",
-    "tags": [
-      "Utilities",
-      "General"
-    ]
-  },
-  {
-    "title": "Previewed",
-    "url": "https://previewed.app/",
-    "category": "miscellaneous-tools",
-    "description": "Device mockups and animations",
-    "tags": [
-      "Utilities",
-      "General"
-    ]
-  },
-  {
-    "title": "DesignMD",
-    "url": "https://designmd.me/",
-    "category": "miscellaneous-tools",
-    "description": "Website design inspiration",
-    "tags": [
-      "Utilities",
-      "General"
-    ]
-  },
-  {
     "title": "Hellowarrant.com",
     "url": "https://Hellowarrant.com",
     "category": "productivity-marketing-business",
@@ -1620,10 +1420,10 @@ export const linkCollections: LinkItem[] = [
     ]
   },
   {
-    "title": "https://blur",
-    "url": "it.app",
+    "title": "Blur It",
+    "url": "https://blur-it.app",
     "category": "unlisted",
-    "description": "blur sensitive or personal information (•\tflamelack.com — worlds all TV channel)",
+    "description": "Blur sensitive or personal information",
     "tags": [
       "Utilities",
       "General"

@@ -125,10 +125,10 @@ export default function Dashboard() {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full h-[580px] bg-[#050505] border border-[#333] rounded-xl shadow-[0_0_80px_rgba(59,130,246,0.12)] flex overflow-hidden"
+      className="w-full min-h-[580px] md:h-[580px] bg-[#050505] border border-[#333] rounded-xl shadow-[0_0_80px_rgba(59,130,246,0.12)] flex flex-col md:flex-row overflow-hidden"
     >
       {/* Sidebar */}
-      <div className="w-60 border-r border-[#1a1a1a] bg-[#0a0a0a] flex flex-col shrink-0">
+      <div className="w-full md:w-60 border-b md:border-b-0 md:border-r border-[#1a1a1a] bg-[#0a0a0a] flex flex-col shrink-0">
         <div className="p-5 border-b border-[#1a1a1a] flex items-center gap-3">
           <div className="flex items-center gap-2">
             <div className="text-[#3b82f6]">
@@ -138,12 +138,12 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="p-3 flex-1 flex flex-col gap-1">
+        <div className="p-3 flex-none md:flex-1 flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible gap-2 md:gap-1 scrollbar-hide">
           {tabs.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className="relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-left transition-all duration-200 text-[#888] hover:text-white hover:bg-white/5"
+              className="relative shrink-0 md:w-full flex items-center gap-3 px-4 md:px-3 py-2.5 rounded-lg text-sm font-medium text-left transition-all duration-200 text-[#888] hover:text-white hover:bg-white/5 whitespace-nowrap"
             >
               {activeTab === id && (
                 <motion.div

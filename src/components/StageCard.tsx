@@ -40,9 +40,9 @@ export default function StageCard({
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`flex items-center justify-between mb-48 relative z-10 gap-16 ${isReversed ? "flex-row-reverse" : ""}`}
+      className={`flex flex-col items-center justify-between mb-24 md:mb-48 relative z-10 gap-8 md:gap-16 md:flex-row ${isReversed ? "md:flex-row-reverse" : ""}`}
     >
-      <div className="flex-1 max-w-xl">
+      <div className="flex-1 w-full max-w-xl text-center md:text-left">
         <div className={`inline-block px-3 py-1 rounded text-xs font-bold tracking-widest uppercase mb-4 ${labelStyles[labelColor]}`}>
           {stageNum}
         </div>
@@ -53,7 +53,7 @@ export default function StageCard({
       <motion.div
         whileHover={{ scale: 1.02, y: -4 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className={`flex-1 bg-[#0a0a0a] border border-[#333] rounded-2xl h-[350px] flex flex-col overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-colors duration-500 ${borderHoverStyles[labelColor]}`}
+        className={`flex-1 w-full bg-[#0a0a0a] border border-[#333] rounded-2xl h-[350px] flex flex-col overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-colors duration-500 ${borderHoverStyles[labelColor]}`}
       >
         {visual}
       </motion.div>

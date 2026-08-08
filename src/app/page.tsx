@@ -134,14 +134,14 @@ export default function Home() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.45 }}
-          className="relative z-10 flex gap-3"
+          className="relative z-10 flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-6 sm:px-0"
         >
-          <Link href="/collections">
-            <button className="bg-white text-black px-6 py-3 rounded-full text-sm font-bold hover:bg-gray-200 active:scale-95 transition-all">
+          <Link href="/collections" className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto bg-white text-black px-8 py-3.5 rounded-full text-sm font-bold hover:bg-gray-200 active:scale-95 transition-all">
               Explore Now →
             </button>
           </Link>
-          <button className="border border-white/20 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-white/5 active:scale-95 transition-all">
+          <button className="w-full sm:w-auto border border-white/20 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 active:scale-95 transition-all">
             ▶ Watch Demo
           </button>
         </motion.div>
@@ -151,19 +151,19 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="relative z-10 flex gap-10 mt-16 pt-8 border-t border-white/10"
+          className="relative z-10 grid grid-cols-2 md:flex md:gap-10 gap-x-8 gap-y-8 mt-16 pt-8 border-t border-white/10"
         >
           {heroStats.map((s) => (
             <div key={s.label} className="text-center">
-              <div className="text-2xl font-bold">{s.value}</div>
-              <div className="text-xs text-[#888] mt-1">{s.label}</div>
+              <div className="text-2xl md:text-3xl font-bold">{s.value}</div>
+              <div className="text-[11px] md:text-xs text-[#888] mt-1 uppercase tracking-wider">{s.label}</div>
             </div>
           ))}
         </motion.div>
       </section>
 
       {/* ── 2. Interactive Insight Flow ──────────────────────────────────── */}
-      <section id="flow-section" className="py-32 px-8 max-w-6xl mx-auto relative w-full">
+      <section id="flow-section" className="py-20 md:py-32 px-6 md:px-8 max-w-6xl mx-auto relative w-full overflow-hidden">
         {/* Track rail — ghost */}
         <div className="absolute top-0 bottom-0 left-1/2 w-px bg-white/5 -translate-x-1/2 z-0" />
         {/* GSAP animated rail */}
@@ -211,7 +211,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="w-full grid grid-cols-2 gap-5">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* API Sync card */}
             <motion.div
               whileHover={{ scale: 1.02, borderColor: "rgba(59,130,246,0.5)" }}
