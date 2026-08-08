@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { Link2 } from "@/components/CategoryIcons";
 
 export default function Navbar() {
   return (
@@ -12,31 +14,23 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-extrabold text-xl tracking-tight text-white">Linkora</span>
-          <span className="px-2 py-0.5 rounded bg-white/10 text-[10px] font-bold text-[#888] uppercase tracking-wider">
-            Intelligence
-          </span>
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="text-white group-hover:text-[#3b82f6] transition-colors">
+              <Link2 size="20" />
+            </div>
+            <span className="font-extrabold text-xl tracking-tight text-white">Linkora</span>
+            <span className="px-2 py-0.5 rounded bg-white/10 text-[10px] font-bold text-[#888] uppercase tracking-wider">
+              Intelligence
+            </span>
+          </Link>
         </div>
 
-        {/* <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#888]">
-          {["Platform", "Docs", "Pricing", "Blog"].map((link) => (
-            <a
-              key={link}
-              href="#"
-              className="hover:text-white transition-colors duration-200 hover:underline underline-offset-4 decoration-white/30"
-            >
-              {link}
-            </a>
-          ))}
-        </nav> */}
-
         <div className="flex items-center gap-4">
-          <a href="#" className="text-sm font-medium text-[#888] hover:text-white transition-colors hidden md:block">
-            Sign in
-          </a>
-          <button className="bg-white text-black px-4 py-2 rounded-full text-sm font-bold hover:bg-gray-200 active:scale-95 transition-all duration-150">
-            Get Access →
-          </button>
+          <Link href="/collections">
+            <button className="bg-white text-black px-4 py-2 rounded-full text-sm font-bold hover:bg-gray-200 active:scale-95 transition-all duration-150">
+              Explore →
+            </button>
+          </Link>
         </div>
       </div>
     </motion.header>

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Zap, FileText, BrainCircuit } from "lucide-react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -17,11 +18,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ThreeVisual = dynamic(() => import("@/components/ThreeVisual"), { ssr: false });
 
+// ─── Dynamic Data for UI ───────────────────────────────────────────────────
+const demoLink1 = linkCollections[0] || { url: "https://chatgpt.com", category: "AI_Tools", tags: ["AI", "chat"] };
+const demoLink2 = linkCollections[2] || { url: "https://perplexity.ai", category: "Research", tags: ["AI"] };
+const uniqueTagsCount = new Set(linkCollections.flatMap((link) => link.tags)).size;
+
+const topCats = CATEGORIES.slice(1, 4).map(c => c.label.replace(/^[^\s]+\s+/, ""));
+
 // ─── Terminal data ──────────────────────────────────────────────────────────
 const terminalLines = [
-  { time: "[14:02:01]", text: "$ linkora add https://chatgpt.com --category AI_Tools" },
+  { time: "[14:02:01]", text: `$ linkora add ${demoLink1.url} --category ${demoLink1.category}` },
   { time: "[14:02:02]", text: "Fetching site metadata... OK", color: "#ffffff" },
-  { time: "[14:02:04]", text: "Generating smart tags: [LLM, chatbot, openai]...", color: "#3b82f6" },
+  { time: "[14:02:04]", text: `Generating smart tags: [${demoLink1.tags.join(", ")}]...`, color: "#3b82f6" },
   { time: "[14:02:05]", text: "Saved successfully. 120ms total time", color: "#a855f7", blink: true },
 ];
 
@@ -41,17 +49,19 @@ function LinkEngineCard() {
       <div className="p-5 grid grid-cols-2 gap-3 flex-1">
         <MetricCard label="Tagging Accuracy" value="99.4%" valueColor="text-[#27c93f]" />
         <MetricCard label="Link Health" value="100%" valueColor="text-[#27c93f]" />
-        <MetricCard label="Active Tags" value="382" />
+        <MetricCard label="Active Tags" value={uniqueTagsCount.toString()} />
         <MetricCard label="Tagging Speed" value="84ms" />
       </div>
     </>
   );
 }
 
+import { linkCollections, CATEGORIES } from "@/data/links";
+
 // ─── Hero stats ──────────────────────────────────────────────────────────────
 const heroStats = [
-  { value: "10k+", label: "Saved Links" },
-  { value: "50+", label: "Smart Collections" },
+  { value: `${linkCollections.length}`, label: "Curated Links" },
+  { value: `${CATEGORIES.length - 1}`, label: "Smart Categories" },
   { value: "140ms", label: "Avg Access Speed" },
   { value: "100%", label: "Cloud Synced" },
 ];
@@ -95,7 +105,7 @@ export default function Home() {
           transition={{ duration: 0.7 }}
           className="relative z-10 bg-white/5 border border-white/10 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium mb-8 text-[#888]"
         >
-          ● Now in Private Beta — Linkora Workspace v2.0
+          ● Now in Private Beta — Linkora Workspace
         </motion.div>
 
         <motion.h1
@@ -126,9 +136,11 @@ export default function Home() {
           transition={{ duration: 0.7, delay: 0.45 }}
           className="relative z-10 flex gap-3"
         >
-          <button className="bg-white text-black px-6 py-3 rounded-full text-sm font-bold hover:bg-gray-200 active:scale-95 transition-all">
-            Start Building →
-          </button>
+          <Link href="/collections">
+            <button className="bg-white text-black px-6 py-3 rounded-full text-sm font-bold hover:bg-gray-200 active:scale-95 transition-all">
+              Explore Now →
+            </button>
+          </Link>
           <button className="border border-white/20 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-white/5 active:scale-95 transition-all">
             ▶ Watch Demo
           </button>
@@ -218,7 +230,7 @@ export default function Home() {
               <div className="font-mono text-xs text-[#888] bg-[#111] p-4 rounded-lg border border-[#222] leading-loose">
                 <span className="text-[#3b82f6]">POST</span> /api/v1/links
                 <br />
-                <span className="text-[#0ea5e9]">{`{ "url": "https://openai.com", "category": "AI" }`}</span>
+                <span className="text-[#0ea5e9]">{`{ "url": "${demoLink2.url}", "category": "${demoLink2.category}" }`}</span>
               </div>
             </motion.div>
 
@@ -238,7 +250,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="text-sm text-[#888] bg-[#111] p-4 rounded-lg border border-[#222] leading-relaxed">
-                "This week, you saved <strong className="text-white">12 new AI platforms</strong>. Your focus was primarily on vector databases, multi-modal reasoning models, and WebGL optimization toolkits."
+                "This week, you saved <strong className="text-white">{linkCollections.length} new resources</strong>. Your focus was primarily on {topCats.join(", ").toLowerCase()}."
               </div>
             </motion.div>
           </div>
@@ -257,6 +269,12 @@ export default function Home() {
           <Dashboard />
         </div>
       </section>
+      
+      {/* ── 4. Footer ───────────────────────────── */}
+      <footer className="border-t border-[#111] py-8 text-center text-xs text-[#555] font-mono w-full">
+        <p>&copy; {new Date().getFullYear()} Linkora - Intelligence Workspace. All links indexed securely.</p>
+        <p className="mt-2">Designed & Built by <a href="https://si-sharif.vercel.app/" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:from-blue-300 hover:to-purple-300 border-b border-blue-400/30 hover:border-blue-400 font-bold pb-0.5 transition-all">Shariful Islam</a></p>
+      </footer>
     </div>
   );
 }

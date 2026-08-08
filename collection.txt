@@ -1,0 +1,179 @@
+AI & Useful Tools Directory
+🤖 AI Assistants, Research & General AI
+1.	ChatGPT — https://chatgpt.com/ — Solve problems and general AI assistance
+2.	Claude — https://claude.ai/ — Solve problems and advanced AI assistance
+3.	Perplexity — https://perplexity.ai/ — Research anything
+4.	Poe — https://poe.com/ — Access multiple AI models for free
+5.	Arena AI — https://arena.ai/ — All AI Tool at free (build agentic website, upload img/pdf, image/video maker) 
+6.	NotebookLM — https://notebooklm.google.com/ — Perfect note of Research, summarize and create podcasts from sources
+7.	Manus — https://manus.im/ — AI agent for coding and tasks for any app
+8.	Magai — https://magai.ai/ — Use multiple AI models in one place
+9.	Fastpedia — https://fastpedia.io/ — Discover Best list of AI tools
+10.	AIxploria — https://aixploria.com/en/ — Directory of 5,000+ AI tools
+11.	Outlier School AI Toolkit — https://outlierschool.com/resources/b2f4b5dc-0946-49e9-a7e4-0b8e6d1d995c — 190+ free AI tools
+12.	Bytez — https://bytez.com/ — AI models and APIs
+13.	SharedChat — https://sharedchat.cn/ — Free Pro AI tools and models
+14.	Unsecured API Keys — https://unsecuredapikeys.com/ — Public API key discovery
+15.	Oxaam — https://www.oxaam.com/ — Pro subscribed free ai tools
+💻 AI Coding & Website Builders
+15.	Lovable — https://lovable.dev/ — Build websites and applications with AI
+•	Code: NEXTPLAY-LOV-25
+16.	v0 — https://v0.dev/ — Generate frontend UI and website mockups
+17.	Blink — https://blink.new/ — Custom AI Build high-quality websites and apps
+18.	Emergent — https://app.emergent.sh/ — Build interactive applications and 3D websites
+19.	Flames — https://www.flames.blue/ — Turn simple prompts into fully polished functional websites
+20.	DeepSite — https://enzostvs-deepsite.hf.space/ — AI website builder
+21.	CreateAnything — https://createanything.com/ — Create apps and websites with AI
+22.	Locofy — https://www.locofy.ai/ — Convert designs into React, Next.js, HTML and Tailwind code
+23.	Uizard — https://uizard.io/ — Convert hand written sketches into UI mockups
+24.	Anima — https://animaapp.com/ — Convert designs into code
+25.	Galileo AI —  https://galileo.ai/— AI-powered UI and design generation
+26.	Codeium — AI coding assistant and coding agent (VS code extension)
+27.	TypingMind — AI interface and AI productivity tool
+28.	Vercel AI SDK — AI SDK for building AI-powered applications
+29.	Penpot — https://penpot.app/ — Open-source design tool with AI plugins
+30.	gstack — https://github.com/garrytan/gstack — Tell Claude to install then coding like Pro
+31.	OriginKit — https://originkit.dev/ — Free premium-looking customizable React components
+32.	PostgREST — https://github.com/PostgREST/postgrest — Automatically create REST APIs from PostgreSQL
+33.	n8n — https://n8n.io/ — Workflow and AI-agent automation
+34.	Coolify — https://coolify.io/ — Self-host and deploy applications
+🎨 UI, Design & Frontend Resources
+35.	shadcn/ui — https://ui.shadcn.com/ — Ready-to-use UI components
+36.	Uiverse — https://uiverse.io/ — Largest Open-source UI component library
+37.	React Bits — https://reactbits.dev/ — Animated React components
+38.	UI Colors — https://uicolors.app/ — Generate color palettes and shades
+39.	ReIcon — https://reicon.dev/ — Icon library
+40.	Logos — https://logos.lndev.me/ — Free SVG logos
+41.	Lordicon — https://lordicon.com/ — Animated icons
+42.	Originkit — https://originkit.dev/ — Premium React components
+43.	AnimMasterLib — https://animmasterlib.dev/ — Premium animated website components
+44.	Previewed — https://previewed.app/ — Create device mockups and animations
+45.	DesignMD — https://designmd.me/ — Describe and explore website design styles
+46.	Storyset — https://storyset.com/ — Free illustrations
+47.	Canva — https://canva.com/ — Graphic design and content creation
+48.	PicWish — https://picwish.com/ — AI photo editing
+49.	Remove.bg — https://remove.bg/ — Remove image backgrounds
+✨ Animation & Motion
+50.	UI Ball — https://uiball.com/ — Animation/loading components
+51.	Anime.js — https://animejs.com/ — Animation engine
+52.	Video Effects — https://videoeffects.com/ — Video effects
+53.	MotionVid — https://motionvid.ai/ — Create professional motion graphics
+54.	EyeCandy — https://eyecannndy.com/ — Video effects
+55.	Atomanimation — https://atomanimation.com/ — Atom Animation resources
+56.	Paper Animator — https://paperanimator.com/ — Create text-cut videos
+🖼️ AI Image Generation & Editing
+57.	Midjourney — https://midjourney.com/ — Generate professional AI artwork
+58.	Runable — https://runable.com/ — Generate images and videos
+59.	Lovart — https://lovart.ai/ — AI graphic design
+60.	ApoB — https://apob.ai/ — Image conversion/generation
+61.	FastPhoto — https://fastphoto.io/ — Generate professional AI headshots
+62.	HairStyle AI Changer — https://hairstyleaichanger.com/ — Change hairstyles with AI
+63.	AutoDraw — https://autodraw.com/ — Turn rough sketches into drawings
+64.	Backflip — https://backflip.ai/ — Create 3D objects from text
+65.	Napkin AI — https://napkin.ai/ — Turn ideas/text into visual diagrams
+66.	Infography — https://infography.in/ — Convert articles into infographics
+67.	AdCreative.ai — https://adcreative.ai/ — Generate advertising creatives
+68.	Predis AI — https://predis.ai/ — Generate social media advertisements
+69.	Fastread — https://fastread.io/ — AI ebook creation
+🎬 AI Video & Avatar Tools
+70.	Runway — https://runway.ml/ — AI video generation and editing
+71.	HeyGen — https://heygen.com/ — AI avatar videos
+72.	Suno — https://suno.com/ — AI music and songs
+73.	Soundraw — https://soundraw.io/ — Generate music
+74.	MusicGPT — https://musicgpt.com/ — Generate music with AI
+75.	AIVA — https://aiva.ai/ — AI music composition
+76.	Submagic — https://submagic.co/ — Turn long videos into engaging shorts
+77.	Clueso — https://clueso.io/ — Create product videos
+78.	Syllaby — https://syllaby.io/ — Create faceless videos
+79.	Paper Animator — https://paperanimator.com/ — Create animated text videos
+80.	Voicebox — https://voicebox.sh/ — AI voice cloning
+81.	ElevenLabs — https://elevenlabs.io/ — AI voice generation and cloning
+82.	Cartesia — https://play.cartesia.ai/ — AI voice generation and cloning (if credit limit end then delete and create new organization)
+83.	Luma AI — https://luma.ai/ — Generate 3D content and videos
+84.	Baidu — baidu.com — each day free 10 ai videos
+🎵 Music & Audio
+84.	MyInstants — https://www.myinstants.com/ — Meme sounds and music
+85.	Vocal Remover — https://vocalremover.org/ — Remove vocals from music
+86.	Soundraw — https://soundraw.io/ — AI music generation
+87.	Suno — https://suno.com/ — AI music generation
+88.	MusicGPT — https://musicgpt.com/ — Generate music
+📹 Video, Screen Recording & Content
+89.	Screenity — https://screenity.io/ — Record videos with drawing/annotation
+90.	RecCloud — https://reccloud.com/ — Summarize YouTube videos
+91.	Youmind — http://Youmind.com — Summarize YouTube videos
+92.	Descript — https://descript.com/ — Edit podcasts and videos
+93.	Skysnail — https://skysnail.io/ — Create viral thumbnails
+94.	Video Effects — https://videoeffects.com/ — Video effects
+95.	Window Swap — http://window-swap.com/ — View cc camera scenes from cameras around the world
+📚 Learning & Developer Resources
+95.	wikiHow — https://wikihow.com/ — Learn how to do things through tutorials
+96.	Class Central — https://classcentral.com/ — Find online courses and certificates
+97.	Loecsen — https://loecsen.com/ — Learn languages
+98.	Learn Anything — https://learn-anything.xyz/ — Learn topics step by step
+99.	DevDocs — https://devdocs.io/ — Documentation for programming languages and frameworks
+100.	iFixit — https://ifixit.com/ — Hardware repair guides
+101.	FreeCodeCamp — https://freecodecamp.org/ — Learn programming and development
+📊 Productivity, Marketing & Business
+102.	Grammarly — https://grammarly.com/ — Improve writing
+103.	SlidesAI — https://slidesai.io/ — Generate presentation slides
+104.	Beautiful.ai — https://beautiful.ai/ — Create presentations
+105.	ResumeEnhance — https://resumeenhance.com/ — Improve resumes with AI
+106.	CopyOwl — https://copyowl.ai/ — AI research and content creation
+107.	KeywordSearch — https://keywordsearch.com/ — Improve advertising conversion
+108.	BrandButler — https://brandbutler.ai/ — Personalized branding
+109.	Ranked AI — https://ranked.ai/ — SEO and website ranking
+110.	Lemlist — https://lemlist.com/ — Lead generation and outreach
+111.	Beehiiv — https://beehiiv.com/ — Newsletter platform
+112.	GoHighLevel — https://gohighlevel.com/ — Marketing and automation
+113.	Sociable — https://sociable.how/ — Generate social media content
+114.	ThreadMaster — https://threadmaster.ai/ — Generate social media threads
+115.	Yoinkit — https://yoinkit.ai/ — Transform content into viral content
+116.	WebinarKit — https://webinarkit.com/ — AI-powered webinar creation
+117.	CreatorUnlock — https://creatorunlock.com/ — AI tools for YouTubers
+118.	Sintra AI — https://sintra.ai/ — Build teams of AI agents
+119.	LiveX AI — https://livex.ai/ — AI customer-retention agents
+120.	Revatto — https://revatto.com/ — Reduce customer churn
+121.	Skala — https://skala.io/ — Legal platform for startups
+🧪 Website & Security Utilities
+122.	Web Check — https://web-check.xyz/ — Deep scan websites
+123.	Neapay — https://neapay.com/ — Fake/test bank card number generator
+124.	Prankshit — https://prankshit.com/ — Create fake app screenshots
+125.	WiFi Map — https://wifimap.io/ — Find public Wi-Fi hotspots
+126.	Globfone — https://globfone.com/send-text/ — Send free online messages
+127.	Window Swap — http://window-swap.com/ — Explore cc tv camera views from around the world
+128.	Snowglobe — https://snowglobe.so/ — Simulate user testing
+🍳 Food & Everyday Utilities
+129.	MyFridgeFood — https://myfridgefood.com/ — Find recipes based on ingredients
+130.	AutoDraw — https://autodraw.com/ — Turn sketches into drawings
+🎮 Games & Entertainment
+131.	Abeto Messenger Game — https://messenger.abeto.co/ — Browser game
+132.	Vudu — Alternative to Netflix
+133.	Window Swap — http://window-swap.com/ — Explore places through public cameras
+🏦 Testing & Developer Utilities
+134.	Neapay — https://neapay.com/ — Generate test bank card numbers
+135.	PostgREST — https://github.com/PostgREST/postgrest — PostgreSQL to REST API
+136.	Coolify — https://coolify.io/ — Deploy applications
+137.	n8n — https://n8n.io/ — Automate workflows and AI agents
+138.	DevDocs — https://devdocs.io/ — Programming documentation
+🤝 AI Companions & Personal Assistance
+139.	Replika — https://replika.ai/ — AI virtual companion
+140.	Ask Coach Ken — https://askcoachken.com/ — Relationship advice and coaching
+141.	Bibley — https://bibley.io/ — AI assistant for Bible study
+142.	Ora — Alternative AI chat platform
+🧰 Miscellaneous Useful Tools
+143.	Tookfk — https://toolfk.com/ — Multiple online tools
+144.	Window Swap — http://window-swap.com/ — Explore locations through cameras
+145.	iFixit — https://ifixit.com/ — Repair guides
+146.	Fastpedia — https://fastpedia.io/ — AI tool directory
+147.	Uiverse — https://uiverse.io/ — Open-source UI components
+148.	Storyset — https://storyset.com/ — Free illustrations
+149.	Previewed — https://previewed.app/ — Device mockups and animations
+150.	DesignMD — https://designmd.me/ — Website design inspiration
+Unlisted:
+
+•	https://Hellowarrant.com  — Maintain market compliance
+•	https://kuse.ai — use chatgpt as whiteboard
+•	https://blur-it.app — blur sensitive or personal information
+•	flamelack.com — worlds all TV channel
+•	https://www.jollymod.com/ - Mod apk files
+•	(example).gitreverse.(example) (made prompt for any website [not work for all] copies and make with lovable)
