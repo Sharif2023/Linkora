@@ -1,34 +1,32 @@
-# Linkora – Intelligence Workspace
+# Linkora – Intelligence Workspace & Resource Directory
 
 ## Project Overview
-Linkora is a conceptual high-fidelity interactive product experience designed to demonstrate the transformation of raw data into structured intelligence and actionable insight. The UI is built to feel calm but powerful, technically confident, and designed specifically for decision-makers—mirroring the premium aesthetic of top-tier SaaS products like Stripe, Linear, and Vercel. 
+Linkora is a high-performance, meticulously designed "Intelligence Workspace" and curated resource directory. It serves as a centralized hub for organizing, discovering, and categorizing over 150+ essential web links, AI platforms, UI frameworks, and developer utilities.
 
-The core narrative walks the user through three key stages:
-1. **Ingest Data**: High-throughput ingestion of raw streams.
-2. **Analyze with AI**: Processing data through adaptive transformer models.
-3. **Generate Insight & Automate**: Extracting human-readable intelligence and triggering workflows.
+Built to mimic the premium aesthetics of top-tier SaaS products (like Stripe, Vercel, and Linear), the interface features a deep dark-mode glassmorphism design, ambient glowing orbs, and fluid micro-animations.
 
-## Project Links
-- **Figma Design**: [Linkora Intelligence Workspace (Figma)](https://www.figma.com/design/WZPVsScGtrJF4cSCyJa4LD/Xai-Intelligent-Workshop?node-id=0-1&t=VHHnZAxcEdId1NEt-1)
-- **Explanation Video**: [Watch on Google Drive](https://drive.google.com/file/d/1mckMK4fnpM8QT14zm3tWBETQJEjnduYq/view?usp=sharing)
-- **Live Deployment**: [https://linkora-intelligence.vercel.app](https://linkora-intelligence.vercel.app)
+## 🚀 Key Features
 
-## Technical Approach & Stack
-This project was engineered with a strict focus on UI/UX clarity, modular component structure, and advanced 3D motion.
-- **Framework**: Next.js (App Router)
-- **Styling**: Tailwind CSS v4 (for strict, consistent design token management and rapid utility-class layout)
-- **3D Rendering**: Three.js & React Three Fiber (R3F)
-- **Animation Architecture**: Framer Motion & GSAP
-- **Icons**: Lucide React
+- **Dynamic Data Architecture**: The entire platform is powered by a single source of truth. The landing page statistics, dashboard metrics, and sidebar categories dynamically calculate and update themselves based on the raw 150+ link dataset.
+- **Lightning-Fast Search & Filtering**: The collections directory features a zero-lag search engine that scans across titles, URLs, descriptions, and metadata tags simultaneously. It utilizes highly optimized React hooks to handle instantaneous filtering alongside staggered entry animations.
+- **Premium Design Language**: Employs deep glassmorphism aesthetics, frosted glass loading overlays, custom SVG category iconography, and ultra-thin neon borders.
+- **Interactive Dashboard**: A clean, data-driven analytics preview that highlights top categories, active link counts, and system metrics without relying on cluttered "dummy" UI elements.
+- **Bilingual Context Blocks**: Includes unique metadata notes (including Bengali technical translations) to provide deep context on why a specific tool is important.
 
-## Animation & Interaction Decisions
-- **The "WOW" Moment (Three.js)**: The Hero section features a custom 3D particle swarm representing "raw data". It utilizes mathematical spherical distribution and rotates infinitely. More importantly, it features an interactive camera/rotation offset bound to the user's pointer (mouse movement) via R3F's `useFrame`, creating an immediate, fluid sense of depth and technical sophistication.
-- **Scroll Storytelling (Framer Motion)**: Each stage in the Insight Flow animates into view using Framer Motion's `whileInView` directive. This ensures elements only render their entry animations when the user actually scrolls to them, preserving performance and maintaining focus.
-- **Layout Rails (GSAP)**: The vertical tracking rail that connects the three stages utilizes GSAP's `ScrollTrigger`. This creates a hardware-accelerated scrub animation that draws the connecting gradient line exactly as the user scrolls down the page, tying the 3 stages together cohesively.
+## 🛠️ Technical Stack
+This project was engineered with a strict focus on UI/UX clarity, optimal React render cycles, and modular component structure.
+- **Framework**: Next.js (App Router) & React 18+
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations & Layout**: Framer Motion
+- **Icons**: Lucide React & Custom SVG Design System
 
-## Running the Project Locally
+## 🌐 Live Deployment
+- **Live URL**: [https://linkora.vercel.app](https://linkora.vercel.app) (Update link if deployed elsewhere)
 
-1. **Install Dependencies**
+## 💻 Running the Project Locally
+
+1. **Clone & Install Dependencies**
    Ensure you have Node.js installed. Run the following command in the root directory:
    ```bash
    npm install
@@ -40,4 +38,7 @@ This project was engineered with a strict focus on UI/UX clarity, modular compon
    ```
 
 3. **View the Application**
-   Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the interactive experience.
+   Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the interactive directory.
+
+---
+*Designed & Built by [Shariful Islam](https://si-sharif.vercel.app/)*
