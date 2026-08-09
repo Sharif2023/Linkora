@@ -22,7 +22,7 @@ This project was engineered with a strict focus on UI/UX clarity, optimal React 
 - **Icons**: Lucide React & Custom SVG Design System
 
 ## 🌐 Live Deployment
-- **Live URL**: [https://linkora.vercel.app](https://linkora.vercel.app) (Update link if deployed elsewhere)
+- **Live URL**: [https://linkora-hub.vercel.app](https://linkora-hub.vercel.app)
 
 ---
 *Designed & Built by [Shariful Islam](https://si-sharif.vercel.app/)*
