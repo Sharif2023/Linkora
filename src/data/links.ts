@@ -240,6 +240,16 @@ export const linkCollections: LinkItem[] = [
     ]
   },
   {
+    "title": "Stitch",
+    "url": "https://stitch.withgoogle.com/",
+    "category": "ai-coding-builders",
+    "description": "Generate UIs for mobile and web applications with AI",
+    "tags": [
+      "Coding",
+      "AI Web Builder"
+    ]
+  },
+  {
     "title": "v0",
     "url": "https://v0.dev/",
     "category": "ai-coding-builders",
