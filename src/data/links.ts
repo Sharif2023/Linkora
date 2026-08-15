@@ -80,6 +80,36 @@ export const CATEGORIES = [
 
 export const linkCollections: LinkItem[] = [
   {
+    "title": "Eraser",
+    "url": "https://www.eraser.io/",
+    "category": "productivity-marketing-business",
+    "description": "Whiteboard and diagramming tool for engineering teams",
+    "tags": [
+      "Whiteboard",
+      "Diagrams"
+    ]
+  },
+  {
+    "title": "Miro",
+    "url": "https://miro.com/",
+    "category": "productivity-marketing-business",
+    "description": "Visual workspace for innovation and team collaboration",
+    "tags": [
+      "Whiteboard",
+      "Collaboration"
+    ]
+  },
+  {
+    "title": "Lucidchart",
+    "url": "https://lucid.co/lucidchart",
+    "category": "productivity-marketing-business",
+    "description": "Intelligent diagramming application for complex workflows",
+    "tags": [
+      "Diagrams",
+      "Flowcharts"
+    ]
+  },
+  {
     "title": "ChatGPT",
     "url": "https://chatgpt.com/",
     "category": "ai-assistants-research",
