@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
 import { ExternalLink, CheckCircle2, AlertCircle, ArrowLeft } from 'lucide-react'
+import SaveBookmarkButton from '@/components/SaveBookmarkButton'
 
 export async function generateMetadata(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -56,14 +57,17 @@ export default async function ResourceDetailPage(props: { params: Promise<{ id: 
               {resource.description}
             </p>
             
-            <a 
-              href={resource.url} 
-              target="_blank" 
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 bg-emerald-500 text-white px-8 py-4 rounded-full font-bold hover:bg-emerald-400 transition-colors shadow-lg shadow-emerald-500/20"
-            >
-              Visit Website <ExternalLink size={16} />
-            </a>
+            <div className="flex flex-wrap items-center gap-4">
+              <a 
+                href={resource.url} 
+                target="_blank" 
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 bg-emerald-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-400 transition-colors shadow-lg shadow-emerald-500/20"
+              >
+                Visit Website <ExternalLink size={16} />
+              </a>
+              <SaveBookmarkButton resourceId={resource.id} />
+            </div>
           </div>
         </div>
 

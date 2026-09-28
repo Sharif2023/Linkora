@@ -3,8 +3,11 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Link2 } from "@/components/CategoryIcons";
+import { useSession, signOut } from "next-auth/react";
+import { LogOut, User } from "lucide-react";
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -34,6 +37,33 @@ export default function Navbar() {
               Explore →
             </button>
           </Link>
+
+          {status === "loading" ? (
+            <div className="w-8 h-8 rounded-full border-2 border-zinc-800 border-t-emerald-500 animate-spin"></div>
+          ) : session ? (
+            <div className="flex items-center gap-4 border-l border-zinc-800 pl-6 ml-2">
+              <Link href="/dashboard" className="text-zinc-400 hover:text-white transition-colors flex items-center gap-2">
+                <User size={18} />
+                <span className="text-sm font-semibold hidden md:block">Dashboard</span>
+              </Link>
+              <button 
+                onClick={() => signOut()}
+                className="text-zinc-500 hover:text-rose-400 transition-colors"
+                title="Logout"
+              >
+                <LogOut size={18} />
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4 border-l border-zinc-800 pl-6 ml-2">
+              <Link href="/login" className="text-zinc-400 hover:text-white font-semibold text-sm transition-colors">
+                Login
+              </Link>
+              <Link href="/register" className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors">
+                Sign up
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </motion.header>

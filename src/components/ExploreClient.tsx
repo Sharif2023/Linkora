@@ -77,7 +77,7 @@ export default function ExploreClient({
   });
 
   return (
-    <div className="flex h-[calc(100vh-64px)] pt-16 mt-16 overflow-hidden max-w-[1400px] mx-auto w-full relative">
+    <div className="flex h-screen pt-16 overflow-hidden max-w-[1400px] mx-auto w-full relative">
       {/* Spacer to reserve width for the sidebar without layout shift */}
       <div className="w-16 lg:w-20 shrink-0 hidden md:block"></div>
 
