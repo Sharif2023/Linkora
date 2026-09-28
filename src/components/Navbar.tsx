@@ -10,24 +10,27 @@ export default function Navbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-md"
+      className="fixed top-0 w-full z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-md"
     >
       <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="text-white group-hover:text-[#3b82f6] transition-colors">
-              <Link2 size="20" />
+            <div className="text-white group-hover:text-emerald-500 transform transition-all duration-300 group-hover:rotate-180">
+              <Link2 size="24" />
             </div>
-            <span className="font-extrabold text-xl tracking-tight text-white">Linkora</span>
-            <span className="px-2 py-0.5 rounded bg-white/10 text-[10px] font-bold text-[#888] uppercase tracking-wider">
-              Intelligence
+            <span className="font-extrabold text-2xl tracking-tight text-white">Linkora</span>
+            <span className="px-2 py-1 rounded bg-zinc-800 text-xs font-bold text-zinc-400 uppercase tracking-wider">
+              Workspace
             </span>
           </Link>
         </div>
 
-        <div className="flex items-center gap-4">
-          <Link href="/collections">
-            <button className="bg-white text-black px-4 py-2 rounded-full text-sm font-bold hover:bg-gray-200 active:scale-95 transition-all duration-150">
+        <div className="flex items-center gap-6">
+          <Link href="/stacks" className="text-zinc-400 hover:text-white font-semibold text-sm transition-colors hidden md:block">
+            Curated Stacks
+          </Link>
+          <Link href="/explore">
+            <button className="bg-emerald-500 text-white px-5 py-2.5 rounded-full text-base font-bold hover:bg-emerald-400 active:scale-95 transition-all duration-150">
               Explore →
             </button>
           </Link>

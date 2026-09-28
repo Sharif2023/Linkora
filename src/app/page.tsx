@@ -5,95 +5,22 @@ import { motion } from "framer-motion";
 import { Zap, FileText, BrainCircuit } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import Navbar from "@/components/Navbar";
-import StageCard from "@/components/StageCard";
-import TerminalMockup from "@/components/TerminalMockup";
-import MetricCard from "@/components/MetricCard";
-import Dashboard from "@/components/Dashboard";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ThreeVisual = dynamic(() => import("@/components/ThreeVisual"), { ssr: false });
 
-// ─── Dynamic Data for UI ───────────────────────────────────────────────────
-const demoLink1 = linkCollections[0] || { url: "https://chatgpt.com", category: "AI_Tools", tags: ["AI", "chat"] };
-const demoLink2 = linkCollections[2] || { url: "https://perplexity.ai", category: "Research", tags: ["AI"] };
-const uniqueTagsCount = new Set(linkCollections.flatMap((link) => link.tags)).size;
-
-const topCats = CATEGORIES.slice(1, 4).map(c => c.label.replace(/^[^\s]+\s+/, ""));
-
-// ─── Terminal data ──────────────────────────────────────────────────────────
-const terminalLines = [
-  { time: "[14:02:01]", text: `$ linkora add ${demoLink1.url} --category ${demoLink1.category}` },
-  { time: "[14:02:02]", text: "Fetching site metadata... OK", color: "#ffffff" },
-  { time: "[14:02:04]", text: `Generating smart tags: [${demoLink1.tags.join(", ")}]...`, color: "#3b82f6" },
-  { time: "[14:02:05]", text: "Saved successfully. 120ms total time", color: "#a855f7", blink: true },
-];
-
-// ─── Model card ──────────────────────────────────────────────────────────────
-function LinkEngineCard() {
-  return (
-    <>
-      <div className="p-5 border-b border-[#333] flex justify-between items-center">
-        <div className="font-semibold text-lg flex items-center gap-2">
-          <BrainCircuit size={17} />
-          engine.tagger_v2
-        </div>
-        <div className="bg-[#27c93f]/10 text-[#27c93f] px-3 py-1 rounded-full text-xs font-semibold">
-          Ready
-        </div>
-      </div>
-      <div className="p-5 grid grid-cols-2 gap-3 flex-1">
-        <MetricCard label="Tagging Accuracy" value="99.4%" valueColor="text-[#27c93f]" />
-        <MetricCard label="Link Health" value="100%" valueColor="text-[#27c93f]" />
-        <MetricCard label="Active Tags" value={uniqueTagsCount.toString()} />
-        <MetricCard label="Tagging Speed" value="84ms" />
-      </div>
-    </>
-  );
-}
-
 import { linkCollections, CATEGORIES } from "@/data/links";
 
-// ─── Hero stats ──────────────────────────────────────────────────────────────
 const heroStats = [
   { value: `${linkCollections.length}`, label: "Curated Links" },
   { value: `${CATEGORIES.length - 1}`, label: "Smart Categories" },
-  { value: "140ms", label: "Avg Access Speed" },
-  { value: "100%", label: "Cloud Synced" },
 ];
 
 export default function Home() {
-  const railRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (railRef.current) {
-      gsap.fromTo(
-        railRef.current,
-        { height: "0%" },
-        {
-          height: "100%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: "#flow-section",
-            start: "top center",
-            end: "bottom center",
-            scrub: true,
-          },
-        }
-      );
-    }
-  }, []);
-
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen bg-zinc-950 text-white selection:bg-emerald-500/30">
       <Navbar />
-
-      {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
-      <section className="min-h-screen flex flex-col items-center justify-center text-center relative z-10 px-8 pt-32 pb-16">
+      <section className="min-h-[85vh] flex flex-col items-center justify-center text-center relative z-10 px-8 pt-32 pb-16">
         {/* Three.js background */}
         <div className="absolute inset-0 z-[1] pointer-events-none">
           <ThreeVisual />
@@ -103,7 +30,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="relative z-10 bg-white/5 border border-white/10 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium mb-8 text-[#888]"
+          className="relative z-10 bg-zinc-900 border border-zinc-800 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-bold mb-8 text-emerald-500"
         >
           ● Now in Private Beta — Linkora Workspace
         </motion.div>
@@ -115,7 +42,7 @@ export default function Home() {
           className="relative z-10 text-[clamp(2.8rem,6vw,5rem)] font-extrabold tracking-tight leading-[1.08] max-w-3xl mb-6 pointer-events-none"
         >
           All Your AI Links in{" "}
-          <span className="bg-gradient-to-r from-white to-[#aaa] bg-clip-text text-transparent">
+          <span className="text-emerald-500">
             One Smart Workspace
           </span>
         </motion.h1>
@@ -124,7 +51,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative z-10 text-lg text-[#888] max-w-xl leading-relaxed mb-12 pointer-events-none"
+          className="relative z-10 text-xl text-zinc-400 max-w-xl leading-relaxed mb-12 pointer-events-none"
         >
           Linkora organizes, categorizes, and speed-dials all your AI tools and essential web links
           — giving developers and teams one-click clarity.
@@ -134,14 +61,14 @@ export default function Home() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.45 }}
-          className="relative z-10 flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-6 sm:px-0"
+          className="relative z-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 sm:px-0"
         >
-          <Link href="/collections" className="w-full sm:w-auto">
-            <button className="w-full sm:w-auto bg-white text-black px-8 py-3.5 rounded-full text-sm font-bold hover:bg-gray-200 active:scale-95 transition-all">
+          <Link href="/explore" className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto bg-emerald-500 text-white px-10 py-4 rounded-full text-base font-bold hover:bg-emerald-400 active:scale-95 transition-all shadow-lg shadow-emerald-500/20">
               Explore Now →
             </button>
           </Link>
-          <button className="w-full sm:w-auto border border-white/20 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 active:scale-95 transition-all">
+          <button className="w-full sm:w-auto border border-zinc-800 text-zinc-300 px-10 py-4 rounded-full text-base font-bold hover:bg-zinc-900 active:scale-95 transition-all">
             ▶ Watch Demo
           </button>
         </motion.div>
@@ -162,118 +89,151 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── 2. Interactive Insight Flow ──────────────────────────────────── */}
-      <section id="flow-section" className="py-20 md:py-32 px-6 md:px-8 max-w-6xl mx-auto relative w-full overflow-hidden">
-        {/* Track rail — ghost */}
-        <div className="absolute top-0 bottom-0 left-1/2 w-px bg-white/5 -translate-x-1/2 z-0" />
-        {/* GSAP animated rail */}
-        <div
-          ref={railRef}
-          className="absolute top-0 left-1/2 w-px -translate-x-1/2 z-0"
-          style={{
-            background: "linear-gradient(to bottom, #3b82f6, #a855f7, #0ea5e9)",
-            boxShadow: "0 0 12px rgba(59,130,246,0.5)",
-          }}
-        />
-
-        <StageCard
-          stageNum="Stage 01"
-          labelColor="cyan"
-          title="Collect & Save Links"
-          description="Add links instantly from your browser, slack, or terminal. Our high-performance ingestion engine automatically extracts clean metadata, titles, and descriptions in real-time."
-          visual={<TerminalMockup lines={terminalLines} />}
-        />
-
-        <StageCard
-          stageNum="Stage 02"
-          labelColor="purple"
-          title="AI-Powered Categorization"
-          description="Leverage integrated tagger models to automatically organize saved bookmarks into smart categories, identify dead links, and auto-generate summaries."
-          visual={<LinkEngineCard />}
-          direction="reverse"
-        />
-
-        {/* Stage 03 — centred */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col items-center mb-24 relative z-10"
-        >
-          <div className="text-center max-w-2xl mb-10">
-            <div className="inline-block px-3 py-1 rounded bg-[#3b82f6]/10 text-[#3b82f6] border border-[#3b82f6]/20 text-xs font-bold tracking-widest uppercase mb-4">
-              Stage 03
-            </div>
-            <h2 className="text-4xl font-bold mb-4 tracking-tight">Sync, Search & Share</h2>
-            <p className="text-[#888] text-lg leading-relaxed">
-              Access your bookmark hub securely from any device. Export collections, share curated resource boards, or search your saved links database in real-time.
+      {/* ── 2. Value Proposition & Step-by-Step ─────────────────────────── */}
+      <section className="py-32 px-6 md:px-8 relative z-10 bg-zinc-950 border-t border-zinc-900 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto mb-24"
+          >
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+              Stop hoarding bookmarks. <br className="hidden md:block" />
+              <span className="text-emerald-500">Start executing stacks.</span>
+            </h2>
+            <p className="text-zinc-400 text-xl leading-relaxed">
+              Linkora isn't another generic AI directory. It's a curated operating system of proven tools, organized by the exact outcomes you need to achieve.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* API Sync card */}
-            <motion.div
-              whileHover={{ scale: 1.02, borderColor: "rgba(59,130,246,0.5)" }}
-              transition={{ duration: 0.25 }}
-              className="bg-[#0a0a0a] border border-[#333] rounded-2xl p-6 shadow-xl"
-            >
-              <div className="flex items-center gap-4 mb-5">
-                <div className="p-3 rounded-lg bg-[#3b82f6]/20 text-[#3b82f6]">
-                  <Zap size={22} />
+          {/* 3 Step Dynamic Flow */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 relative">
+            {/* Connecting Line (Desktop) */}
+            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-zinc-900 via-emerald-500/30 to-zinc-900 z-0" />
+            
+            {[
+              {
+                step: "01",
+                title: "Discover by Outcome",
+                desc: "Find workflows based on your exact goal—whether it's launching an indie app, automating your marketing, or building a remote career."
+              },
+              {
+                step: "02",
+                title: "Verify the Tools",
+                desc: "Every single resource is manually vetted for hidden costs, real free tiers, and actual utility. Zero fluff, pure value."
+              },
+              {
+                step: "03",
+                title: "Execute the Plan",
+                desc: "Follow step-by-step playbooks that string the right tools together in the exact order you need them to succeed."
+              }
+            ].map((item, i) => (
+              <motion.div 
+                key={item.step}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: i * 0.2 }}
+                className="relative z-10 bg-zinc-900/40 backdrop-blur-xl border border-zinc-800 rounded-3xl p-10 hover:border-emerald-500/50 hover:bg-zinc-900/80 transition-all duration-300 group shadow-lg"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-xl font-black text-zinc-500 mb-8 group-hover:text-emerald-500 group-hover:border-emerald-500/50 group-hover:scale-110 transition-all duration-300 shadow-inner">
+                  {item.step}
                 </div>
-                <div>
-                  <h3 className="font-bold">Developer API & Sync</h3>
-                  <p className="text-sm text-[#888]">Sync links to your own terminal and scripts</p>
-                </div>
-              </div>
-              <div className="font-mono text-xs text-[#888] bg-[#111] p-4 rounded-lg border border-[#222] leading-loose">
-                <span className="text-[#3b82f6]">POST</span> /api/v1/links
-                <br />
-                <span className="text-[#0ea5e9]">{`{ "url": "${demoLink2.url}", "category": "${demoLink2.category}" }`}</span>
-              </div>
-            </motion.div>
-
-            {/* Curation summaries card */}
-            <motion.div
-              whileHover={{ scale: 1.02, borderColor: "rgba(168,85,247,0.5)" }}
-              transition={{ duration: 0.25 }}
-              className="bg-[#0a0a0a] border border-[#333] rounded-2xl p-6 shadow-xl"
-            >
-              <div className="flex items-center gap-4 mb-5">
-                <div className="p-3 rounded-lg bg-[#a855f7]/20 text-[#a855f7]">
-                  <FileText size={22} />
-                </div>
-                <div>
-                  <h3 className="font-bold">Weekly Curated Digest</h3>
-                  <p className="text-sm text-[#888]">AI-generated summaries of saved topics</p>
-                </div>
-              </div>
-              <div className="text-sm text-[#888] bg-[#111] p-4 rounded-lg border border-[#222] leading-relaxed">
-                "This week, you saved <strong className="text-white">{linkCollections.length} new resources</strong>. Your focus was primarily on {topCats.join(", ").toLowerCase()}."
-              </div>
-            </motion.div>
+                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                <p className="text-zinc-400 leading-relaxed text-lg">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* ── 3. Intelligence Dashboard Preview ───────────────────────────── */}
-      <section className="py-28 px-8 border-t border-[#111] w-full">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold tracking-tight mb-4">Intelligence Dashboard</h2>
-            <p className="text-[#888] text-lg">
-              A unified, calm interface built for decision-makers.
-            </p>
+      {/* ── 3. Premium Features Grid ──────────────────────────────────────── */}
+      <section className="py-32 px-6 md:px-8 bg-black relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Feature 1: Large Banner */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-zinc-900/50 border border-zinc-800 rounded-[2.5rem] p-10 md:p-14 md:col-span-2 overflow-hidden relative group"
+            >
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-emerald-500/20 transition-all duration-700" />
+              <div className="relative z-10 max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-950 border border-zinc-800 text-sm font-bold text-zinc-400 mb-8">
+                  <BrainCircuit size={16} className="text-emerald-500" /> 250+ Resources Indexed
+                </div>
+                <h3 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">The ultimate intelligence workspace</h3>
+                <p className="text-zinc-400 text-xl mb-10 leading-relaxed">
+                  We've categorized over 250+ essential links and tools across 16 precise categories. Stop searching the web for tools you already know exist but forgot the name of.
+                </p>
+                <Link href="/explore">
+                  <button className="bg-emerald-500 text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-emerald-400 active:scale-95 transition-all shadow-lg shadow-emerald-500/20">
+                    Access Directory Now
+                  </button>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Feature 2: Small Card */}
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="bg-zinc-900/30 border border-zinc-800 rounded-[2.5rem] p-10 overflow-hidden relative group"
+            >
+              <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-emerald-500/5 to-transparent" />
+              <div className="relative z-10">
+                <div className="w-14 h-14 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-emerald-500 mb-6">
+                  <Zap size={24} />
+                </div>
+                <h4 className="text-2xl font-bold mb-4">Lightning Fast Search</h4>
+                <p className="text-zinc-400 text-lg leading-relaxed">
+                  Find exactly what you need in milliseconds. Our streamlined architecture guarantees instant filtering and layout transitions.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Feature 3: Small Card */}
+            <motion.div 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-zinc-900/30 border border-zinc-800 rounded-[2.5rem] p-10 overflow-hidden relative group"
+            >
+              <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-emerald-500/5 to-transparent" />
+              <div className="relative z-10">
+                <div className="w-14 h-14 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-emerald-500 mb-6">
+                  <FileText size={24} />
+                </div>
+                <h4 className="text-2xl font-bold mb-4">Pricing Transparency</h4>
+                <p className="text-zinc-400 text-lg leading-relaxed">
+                  Every tool explicitly declares its pricing model and whether it has a real free tier. No more gated surprises.
+                </p>
+              </div>
+            </motion.div>
+
           </div>
-          <Dashboard />
         </div>
       </section>
       
       {/* ── 4. Footer ───────────────────────────── */}
-      <footer className="border-t border-[#111] py-8 text-center text-xs text-[#555] font-mono w-full">
-        <p>&copy; {new Date().getFullYear()} Linkora - Intelligence Workspace. All links indexed securely.</p>
-        <p className="mt-2">Designed & Built by <a href="https://si-sharif.vercel.app/" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:from-blue-300 hover:to-purple-300 border-b border-blue-400/30 hover:border-blue-400 font-bold pb-0.5 transition-all">Shariful Islam</a></p>
+      <footer className="border-t border-zinc-900 py-12 text-center w-full bg-zinc-950">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-2xl font-extrabold tracking-tight mb-8">Linkora</h2>
+          <p className="text-sm text-zinc-500 font-mono mb-4">
+            &copy; {new Date().getFullYear()} Linkora - Intelligence Workspace. All links indexed securely.
+          </p>
+          <p className="text-sm text-zinc-500 font-mono">
+            Designed & Built by <a href="https://si-sharif.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-emerald-500 hover:text-emerald-400 font-bold transition-colors">Shariful Islam</a>
+          </p>
+        </div>
       </footer>
     </div>
   );

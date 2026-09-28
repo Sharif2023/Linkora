@@ -1,0 +1,229 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  
+  savedItems    SavedItem[]
+  alerts        Alert[]
+  reports       Report[]
+  subscriptions Subscription[]
+  
+  curator       Curator?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Curator {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio         String?
+  website     String?
+  
+  collections Collection[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Resource {
+  id                 String   @id @default(cuid())
+  url                String   @unique
+  title              String
+  description        String
+  logo               String?
+  
+  categoryId         String?
+  category           Category? @relation(fields: [categoryId], references: [id])
+  
+  tags               Tag[]    @relation("ResourceTags")
+  
+  pricingModel       String? // Free, Freemium, Paid
+  freeTier           Boolean  @default(false)
+  payoutMethods      String? // e.g., PayPal, Crypto, Wire
+  minPayout          Float?
+  supportedCountries String?
+  fees               String?
+  currency           String?
+  
+  verificationDate   DateTime?
+  lastChecked        DateTime?
+  status             String   @default("ACTIVE") // ACTIVE, INACTIVE, BROKEN
+  score              Float    @default(0)
+  
+  alternatives       Resource[] @relation("ResourceAlternatives")
+  alternativesOf     Resource[] @relation("ResourceAlternatives")
+  
+  affiliateDisclosure String?
+  
+  metadata           ResourceMetadata?
+  collectionSteps    CollectionStep[]
+  reports            Report[]
+  alerts             Alert[]
+  savedItems         SavedItem[]
+  changelog          Changelog[]
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model ResourceMetadata {
+  id          String   @id @default(cuid())
+  resourceId  String   @unique
+  resource    Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  
+  banglaDescription String?
+  customData        String? // JSON string or similar for extra metadata
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  
+  resources   Resource[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tag {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  
+  resources   Resource[] @relation("ResourceTags")
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Collection {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  outcome      String
+  audience     String?
+  constraints  String?
+  difficulty   String?  // Beginner, Intermediate, Advanced
+  timeToResult String?
+  cost         String?
+  
+  curatorId    String?
+  curator      Curator? @relation(fields: [curatorId], references: [id])
+  
+  steps        CollectionStep[]
+  alternatives String? // Text describing alternatives or a JSON structure
+  actionPlan   String? // Text or markdown
+  sources      String?
+  
+  lastVerified DateTime?
+  changelog    Changelog[]
+  savedItems   SavedItem[]
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model CollectionStep {
+  id           String     @id @default(cuid())
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  
+  order        Int
+  title        String
+  description  String?
+  
+  resourceId   String?
+  resource     Resource?  @relation(fields: [resourceId], references: [id])
+  
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  resourceId String
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  
+  type       String   // broken, outdated, payout_issue, price_change, country_change
+  message    String?
+  status     String   @default("OPEN") // OPEN, RESOLVED, DISMISSED
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Alert {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resourceId  String?
+  resource    Resource? @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  
+  type        String
+  threshold   String?
+  triggeredAt DateTime?
+  readAt      DateTime?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SavedItem {
+  id           String      @id @default(cuid())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  resourceId   String?
+  resource     Resource?   @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  
+  collectionId String?
+  collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  
+  createdAt    DateTime    @default(now())
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  plan      String   // free, pro, premium
+  status    String   @default("ACTIVE")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Changelog {
+  id           String      @id @default(cuid())
+  
+  resourceId   String?
+  resource     Resource?   @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  
+  collectionId String?
+  collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  
+  changes      String      // JSON describing what changed
+  notes        String?
+  
+  createdAt    DateTime    @default(now())
+}
