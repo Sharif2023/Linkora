@@ -1448,5 +1448,642 @@ export const linkCollections: LinkItem[] = [
       "Utilities",
       "General"
     ]
+  },
+  {
+    "title": "Google Gemini",
+    "url": "https://gemini.google.com/",
+    "category": "ai-assistants-research",
+    "description": "Google's multimodal AI ecosystem.",
+    "tags": []
+  },
+  {
+    "title": "Monica.im",
+    "url": "https://monica.im/",
+    "category": "ai-assistants-research",
+    "description": "Access pro AI models for free.",
+    "tags": []
+  },
+  {
+    "title": "Yupp.ai",
+    "url": "https://yupp.ai/",
+    "category": "ai-assistants-research",
+    "description": "Directory providing access to free AI models.",
+    "tags": []
+  },
+  {
+    "title": "GenSpark",
+    "url": "https://genspark.ai/",
+    "category": "ai-assistants-research",
+    "description": "Access pro-level AI research and tools for free.",
+    "tags": []
+  },
+  {
+    "title": "Chatbase",
+    "url": "https://chatbase.co/",
+    "category": "ai-assistants-research",
+    "description": "Build custom AI chatbots trained on your own data.",
+    "tags": []
+  },
+  {
+    "title": "Sifuchat",
+    "url": "https://sifuchat.com/",
+    "category": "ai-assistants-research",
+    "description": "Create and deploy your own AI chatbot.",
+    "tags": []
+  },
+  {
+    "title": "ChatPDF",
+    "url": "https://chatpdf.com/",
+    "category": "ai-assistants-research",
+    "description": "Chat directly with any PDF document to extract information.",
+    "tags": []
+  },
+  {
+    "title": "Get Viktor",
+    "url": "https://getviktor.com/",
+    "category": "ai-assistants-research",
+    "description": "AI employee integrated for your Slack community.",
+    "tags": []
+  },
+  {
+    "title": "Meigen.ai",
+    "url": "https://meigen.ai/",
+    "category": "ai-assistants-research",
+    "description": "Library of ready-to-use AI prompts.",
+    "tags": []
+  },
+  {
+    "title": "ModelsLab",
+    "url": "https://modelslab.com/",
+    "category": "ai-assistants-research",
+    "description": "Access over 1000 AI models for development and testing.",
+    "tags": []
+  },
+  {
+    "title": "Vengeance UI",
+    "url": "https://www.vengeanceui.com/",
+    "category": "ui-design-frontend",
+    "description": "Next-gen UI interactions, hover effects, and animated tooltips.",
+    "tags": []
+  },
+  {
+    "title": "Ripplix",
+    "url": "https://www.ripplix.com/",
+    "category": "ui-design-frontend",
+    "description": "UI animation and micro-interaction library.",
+    "tags": []
+  },
+  {
+    "title": "Flexbox Labs",
+    "url": "https://flexboxlabs.netlify.app/",
+    "category": "learning-dev-resources",
+    "description": "Learn Flexbox and CSS Grid interactively with code.",
+    "tags": []
+  },
+  {
+    "title": "Staying.fun",
+    "url": "https://staying.fun/",
+    "category": "learning-dev-resources",
+    "description": "Learn code snippets visually.",
+    "tags": []
+  },
+  {
+    "title": "Replit",
+    "url": "https://replit.com/",
+    "category": "ai-coding-builders",
+    "description": "Online IDE with AI features (Vibe Coding) to write, run, and host code.",
+    "tags": []
+  },
+  {
+    "title": "10Web",
+    "url": "https://10web.io/",
+    "category": "ai-coding-builders",
+    "description": "AI-powered rapid website builder.",
+    "tags": []
+  },
+  {
+    "title": "Get Maker AI",
+    "url": "https://getmakerai.com/",
+    "category": "ai-coding-builders",
+    "description": "Build software (SaaS) without coding.",
+    "tags": []
+  },
+  {
+    "title": "OpenClaw",
+    "url": "https://openclawengine.xyz/",
+    "category": "ai-coding-builders",
+    "description": "OpenClaw deployment engine.",
+    "tags": []
+  },
+  {
+    "title": "UptimeRobot",
+    "url": "https://uptimerobot.com/",
+    "category": "website-security-utilities",
+    "description": "Monitor website uptime and keep serverless backends active.",
+    "tags": []
+  },
+  {
+    "title": "Studio Polotno",
+    "url": "https://studio-polotno.com/",
+    "category": "ui-design-frontend",
+    "description": "A robust, free alternative to Canva.",
+    "tags": []
+  },
+  {
+    "title": "Adobe Firefly",
+    "url": "https://firefly.adobe.com/",
+    "category": "ai-image-generation",
+    "description": "Enterprise-grade generative AI by Adobe.",
+    "tags": []
+  },
+  {
+    "title": "Ideogram",
+    "url": "https://ideogram.ai/",
+    "category": "ai-image-generation",
+    "description": "Generate AI images with highly accurate text (ideal for thumbnails).",
+    "tags": []
+  },
+  {
+    "title": "Ni3.app",
+    "url": "https://ni3.app/",
+    "category": "ai-image-generation",
+    "description": "Generate HD thumbnails directly from video titles.",
+    "tags": []
+  },
+  {
+    "title": "Recraft",
+    "url": "https://recraft.ai/",
+    "category": "ai-image-generation",
+    "description": "Create scalable vector graphics, 3D elements, and AI posters.",
+    "tags": []
+  },
+  {
+    "title": "Flair",
+    "url": "https://flair.ai/",
+    "category": "ai-image-generation",
+    "description": "AI design tool for branded product photography.",
+    "tags": []
+  },
+  {
+    "title": "Stockimg.ai",
+    "url": "https://stockimg.ai/",
+    "category": "ai-image-generation",
+    "description": "Generate professional stock images and designs.",
+    "tags": []
+  },
+  {
+    "title": "Perchance",
+    "url": "https://perchance.org/",
+    "category": "ai-image-generation",
+    "description": "Free, flexible AI image generator.",
+    "tags": []
+  },
+  {
+    "title": "Lovart",
+    "url": "https://lovart.com/",
+    "category": "ai-image-generation",
+    "description": "Design graphics with AI assistance.",
+    "tags": []
+  },
+  {
+    "title": "Virtual Threads",
+    "url": "https://virtualthreads.io/",
+    "category": "ui-design-frontend",
+    "description": "Create realistic 3D mockups of products.",
+    "tags": []
+  },
+  {
+    "title": "3DSVG Design",
+    "url": "https://3dsvg.design/",
+    "category": "animation-motion",
+    "description": "Upload your 2D logo to make it 3D and animated.",
+    "tags": []
+  },
+  {
+    "title": "3D Logo Lab",
+    "url": "https://3dlogolab.io/",
+    "category": "animation-motion",
+    "description": "Convert standard logos into 3D animations.",
+    "tags": []
+  },
+  {
+    "title": "Looka",
+    "url": "https://looka.com/",
+    "category": "productivity-marketing-business",
+    "description": "AI-powered logo and brand design generator.",
+    "tags": []
+  },
+  {
+    "title": "Synthesia",
+    "url": "https://synthesia.ai/",
+    "category": "ai-video-avatar",
+    "description": "Create professional AI videos from text.",
+    "tags": []
+  },
+  {
+    "title": "Vidnoz",
+    "url": "https://vidnoz.com/",
+    "category": "ai-video-avatar",
+    "description": "Free AI talking avatars and video creation tools.",
+    "tags": []
+  },
+  {
+    "title": "ProfilePro",
+    "url": "https://www.profilepro.ai/",
+    "category": "ai-video-avatar",
+    "description": "Create personalized AI avatars for profiles.",
+    "tags": []
+  },
+  {
+    "title": "Starry.ai",
+    "url": "https://starryai.com/",
+    "category": "ai-image-generation",
+    "description": "Generate artistic AI avatars.",
+    "tags": []
+  },
+  {
+    "title": "Captions AI",
+    "url": "https://www.captions.ai/",
+    "category": "ai-video-avatar",
+    "description": "Add auto-captions and edit talking-head videos seamlessly.",
+    "tags": []
+  },
+  {
+    "title": "Opus Pro",
+    "url": "https://opus.pro/agent",
+    "category": "ai-video-avatar",
+    "description": "Generate engaging AI storytelling videos.",
+    "tags": []
+  },
+  {
+    "title": "Jogg.ai",
+    "url": "https://jogg.ai/",
+    "category": "ai-video-avatar",
+    "description": "Turn product links into fast-forwarded video ads.",
+    "tags": []
+  },
+  {
+    "title": "Fliki",
+    "url": "https://fliki.ai/",
+    "category": "ai-video-avatar",
+    "description": "Turn text scripts into videos and TikToks.",
+    "tags": []
+  },
+  {
+    "title": "Kling AI",
+    "url": "https://klingai.com/",
+    "category": "ai-video-avatar",
+    "description": "High-quality Image-to-animation AI video generator.",
+    "tags": []
+  },
+  {
+    "title": "Hunyuan Video",
+    "url": "https://hunyuanvideo.org/",
+    "category": "ai-video-avatar",
+    "description": "Tencent's AI image and video generator.",
+    "tags": []
+  },
+  {
+    "title": "Jitter",
+    "url": "https://jitter.video/",
+    "category": "animation-motion",
+    "description": "Design and ship polished motion graphics and animations.",
+    "tags": []
+  },
+  {
+    "title": "Swishy",
+    "url": "https://www.swishy.ai/",
+    "category": "animation-motion",
+    "description": "AI motion designer for stunning animations and typefaces.",
+    "tags": []
+  },
+  {
+    "title": "SpiritApp",
+    "url": "https://spiritapp.io/",
+    "category": "productivity-marketing-business",
+    "description": "Marketing animation software for small businesses.",
+    "tags": []
+  },
+  {
+    "title": "Powtoon",
+    "url": "https://powtoon.com/",
+    "category": "animation-motion",
+    "description": "Create animated explainer videos and presentations.",
+    "tags": []
+  },
+  {
+    "title": "Vmake",
+    "url": "https://vmake.ai/",
+    "category": "ai-video-avatar",
+    "description": "Remove video backgrounds and watermarks using AI.",
+    "tags": []
+  },
+  {
+    "title": "Zlabz",
+    "url": "https://zlabz.io/en",
+    "category": "ai-video-avatar",
+    "description": "Convert news/text into video formats.",
+    "tags": []
+  },
+  {
+    "title": "Higgsfield",
+    "url": "https://higgsfield.ai/",
+    "category": "ai-video-avatar",
+    "description": "Specialized AI video visuals and generation.",
+    "tags": []
+  },
+  {
+    "title": "DupDub",
+    "url": "https://dupdub.com/",
+    "category": "music-audio",
+    "description": "Instant voice clone offering multiple voices and emotional tones.",
+    "tags": []
+  },
+  {
+    "title": "Fish Audio",
+    "url": "https://fish.audio/",
+    "category": "music-audio",
+    "description": "Accessible audio cloning and generation.",
+    "tags": []
+  },
+  {
+    "title": "Adobe Podcast Enhance",
+    "url": "https://podcast.adobe.com/enhance",
+    "category": "music-audio",
+    "description": "Enhance low-quality voice recordings to studio quality.",
+    "tags": []
+  },
+  {
+    "title": "Wispr Flow",
+    "url": "https://wisprflow.com/",
+    "category": "music-audio",
+    "description": "Super-fast, highly accurate speech-to-text dictation tool.",
+    "tags": []
+  },
+  {
+    "title": "Background Noise Remover",
+    "url": "https://bit.ly/bgnoiseremover",
+    "category": "music-audio",
+    "description": "Free audio noise reduction tool.",
+    "tags": []
+  },
+  {
+    "title": "SeoBot AI",
+    "url": "https://seobotai.com/",
+    "category": "productivity-marketing-business",
+    "description": "Autonomous AI SEO optimization to rank your website.",
+    "tags": []
+  },
+  {
+    "title": "BigSpy",
+    "url": "https://bigged.com/spy",
+    "category": "productivity-marketing-business",
+    "description": "Spy on high-performing ads in any niche.",
+    "tags": []
+  },
+  {
+    "title": "ViralSky",
+    "url": "https://viralsky.com/",
+    "category": "productivity-marketing-business",
+    "description": "Social media tool for creating viral posts.",
+    "tags": []
+  },
+  {
+    "title": "H-Supertools",
+    "url": "https://h-supertools.com/",
+    "category": "productivity-marketing-business",
+    "description": "Endless collection of free digital marketing and SEO tools.",
+    "tags": []
+  },
+  {
+    "title": "Anderro",
+    "url": "https://anderro.com/",
+    "category": "productivity-marketing-business",
+    "description": "Platform designed for generating passive income via affiliate marketing.",
+    "tags": []
+  },
+  {
+    "title": "Faces.app",
+    "url": "https://faces.app/",
+    "category": "productivity-marketing-business",
+    "description": "Create presentation slides from a simple prompt.",
+    "tags": []
+  },
+  {
+    "title": "EdrawMind",
+    "url": "https://edrawmind.com/",
+    "category": "productivity-marketing-business",
+    "description": "AI-assisted mind mapping and brainstorming tool.",
+    "tags": []
+  },
+  {
+    "title": "Open.maic.chat",
+    "url": "https://open.maic.chat/",
+    "category": "learning-dev-resources",
+    "description": "Generates a simulated lesson for anything you want to learn.",
+    "tags": []
+  },
+  {
+    "title": "Instructables",
+    "url": "https://instructables.com/",
+    "category": "learning-dev-resources",
+    "description": "Step-by-step guides on how to build almost anything.",
+    "tags": []
+  },
+  {
+    "title": "Supermeme",
+    "url": "https://supermeme.ai/",
+    "category": "miscellaneous-tools",
+    "description": "Generate engaging memes instantly using AI.",
+    "tags": []
+  },
+  {
+    "title": "Pic2Map",
+    "url": "https://pic2map.com/",
+    "category": "miscellaneous-tools",
+    "description": "Find the geographic location of captured images (EXIF data viewer).",
+    "tags": []
+  },
+  {
+    "title": "NoMoreCopyright",
+    "url": "https://nomorecopyright.com/",
+    "category": "miscellaneous-tools",
+    "description": "Bypass copyright by generating slightly altered AI images.",
+    "tags": []
+  },
+  {
+    "title": "PlayPhrase",
+    "url": "https://playphrase.me/",
+    "category": "miscellaneous-tools",
+    "description": "Find any spoken phrase across movies or TV shows.",
+    "tags": []
+  },
+  {
+    "title": "Watch-v2 Autoembed",
+    "url": "https://watch-v2.autoembed.cc/",
+    "category": "games-entertainment",
+    "description": "Search and watch movie/series streams.",
+    "tags": []
+  },
+  {
+    "title": "Rezi",
+    "url": "https://rezi.one/",
+    "category": "games-entertainment",
+    "description": "Free gaming resource.",
+    "tags": []
+  },
+  {
+    "title": "Sifuyik",
+    "url": "https://sifuyik.com/",
+    "category": "learning-dev-resources",
+    "description": "Collection of free AI tips and resources.",
+    "tags": []
+  },
+  {
+    "title": "QuickRef",
+    "url": "https://quickref.me/",
+    "category": "learning-dev-resources",
+    "description": "Quick reference cheat sheets for developers and modern tools.",
+    "tags": []
+  },
+  {
+    "title": "Toptal",
+    "url": "https://toptal.com/",
+    "category": "productivity-marketing-business",
+    "description": "Freelance network for remote developers and designers.",
+    "tags": []
+  },
+  {
+    "title": "Wellfound (AngelList)",
+    "url": "https://wellfound.com/",
+    "category": "productivity-marketing-business",
+    "description": "Startup job board for remote roles.",
+    "tags": []
+  },
+  {
+    "title": "NoDesk",
+    "url": "https://nodesk.co/",
+    "category": "productivity-marketing-business",
+    "description": "Directory of remote jobs and companies.",
+    "tags": []
+  },
+  {
+    "title": "Upwork",
+    "url": "https://upwork.com/",
+    "category": "productivity-marketing-business",
+    "description": "Global freelancing platform.",
+    "tags": []
+  },
+  {
+    "title": "LinkedIn Jobs",
+    "url": "https://linkedin.com/jobs",
+    "category": "productivity-marketing-business",
+    "description": "Professional network job board.",
+    "tags": []
+  },
+  {
+    "title": "Remote.co",
+    "url": "https://remote.co/",
+    "category": "productivity-marketing-business",
+    "description": "Remote job board for various industries.",
+    "tags": []
+  },
+  {
+    "title": "FlexJobs",
+    "url": "https://flexjobs.com/",
+    "category": "productivity-marketing-business",
+    "description": "Curated remote and flexible job opportunities.",
+    "tags": []
+  },
+  {
+    "title": "Pangian",
+    "url": "https://pangian.com/",
+    "category": "productivity-marketing-business",
+    "description": "Global community for remote workers.",
+    "tags": []
+  },
+  {
+    "title": "Remotive",
+    "url": "https://remotive.com/",
+    "category": "productivity-marketing-business",
+    "description": "Remote job board and community.",
+    "tags": []
+  },
+  {
+    "title": "Remotees",
+    "url": "https://remotees.com/",
+    "category": "productivity-marketing-business",
+    "description": "Track companies hiring remotely.",
+    "tags": []
+  },
+  {
+    "title": "Freelancer",
+    "url": "https://freelancer.com/",
+    "category": "productivity-marketing-business",
+    "description": "Freelance marketplace.",
+    "tags": []
+  },
+  {
+    "title": "Jobspresso",
+    "url": "https://jobspresso.co/",
+    "category": "productivity-marketing-business",
+    "description": "High-quality remote jobs in tech and more.",
+    "tags": []
+  },
+  {
+    "title": "Remote OK",
+    "url": "https://remoteok.com/",
+    "category": "productivity-marketing-business",
+    "description": "One of the largest remote job boards.",
+    "tags": []
+  },
+  {
+    "title": "Remote4Me",
+    "url": "https://remote4me.com/",
+    "category": "productivity-marketing-business",
+    "description": "Remote jobs aggregator for tech and non-tech.",
+    "tags": []
+  },
+  {
+    "title": "SimplyHired",
+    "url": "https://simplyhired.com/",
+    "category": "productivity-marketing-business",
+    "description": "Job search engine including remote roles.",
+    "tags": []
+  },
+  {
+    "title": "Outsourcely",
+    "url": "https://outsourcely.com/",
+    "category": "productivity-marketing-business",
+    "description": "Find reliable remote workers and jobs.",
+    "tags": []
+  },
+  {
+    "title": "Skip The Drive",
+    "url": "https://skipthedrive.com/",
+    "category": "productivity-marketing-business",
+    "description": "Free remote job board.",
+    "tags": []
+  },
+  {
+    "title": "Remote OK Asia",
+    "url": "https://remoteok.io/asia",
+    "category": "productivity-marketing-business",
+    "description": "Remote jobs focused on Asia timezone.",
+    "tags": []
+  },
+  {
+    "title": "RemoteHabits",
+    "url": "https://remotehabits.com/",
+    "category": "productivity-marketing-business",
+    "description": "Interviews and tools for remote workers.",
+    "tags": []
+  },
+  {
+    "title": "Europe Remotely",
+    "url": "https://europeremotely.com/",
+    "category": "productivity-marketing-business",
+    "description": "Remote jobs for European timezones.",
+    "tags": []
   }
 ];
