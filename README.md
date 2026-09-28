@@ -14,12 +14,14 @@ Built to mimic the premium aesthetics of top-tier SaaS products (like Stripe, Ve
 - **Bilingual Context Blocks**: Includes unique metadata notes (including Bengali technical translations) to provide deep context on why a specific tool is important.
 
 ## 🛠️ Technical Stack
-This project was engineered with a strict focus on UI/UX clarity, optimal React render cycles, and modular component structure.
-- **Framework**: Next.js (App Router) & React 18+
+This project is engineered with a strict focus on UI/UX clarity, optimal React render cycles, and secure data management.
+- **Framework**: Next.js (App Router) & React 19
 - **Language**: TypeScript
+- **Database & ORM**: Neon (Serverless PostgreSQL) & Prisma ORM
+- **Authentication**: NextAuth.js
 - **Styling**: Tailwind CSS
-- **Animations & Layout**: Framer Motion
-- **Icons**: Lucide React & Custom SVG Design System
+- **Animations & 3D**: Framer Motion, GSAP, & Three.js / React Three Fiber
+- **Icons**: Lucide React
 
 ## 🌐 Live Deployment
 - **Live URL**: [https://linkora-hub.vercel.app](https://linkora-hub.vercel.app)
