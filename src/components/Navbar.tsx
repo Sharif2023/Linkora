@@ -29,8 +29,11 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-6">
-          <Link href="/stacks" className="text-zinc-400 hover:text-white font-semibold text-sm transition-colors hidden md:block">
-            Curated Stacks
+          <Link href="/implement-ideas" className="text-zinc-400 hover:text-white font-semibold text-sm transition-colors hidden md:block">
+            Implement Ideas
+          </Link>
+          <Link href="/collections" className="text-zinc-400 hover:text-white font-semibold text-sm transition-colors hidden md:block">
+            Collections
           </Link>
           <Link href="/explore">
             <button className="bg-emerald-500 text-white px-5 py-2.5 rounded-full text-base font-bold hover:bg-emerald-400 active:scale-95 transition-all duration-150">

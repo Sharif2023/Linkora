@@ -21,6 +21,8 @@ model User {
   alerts        Alert[]
   reports       Report[]
   subscriptions Subscription[]
+  ideaProgress  UserIdeaProgress[]
+  taskProgress  UserTaskProgress[]
   
   curator       Curator?
   
@@ -77,6 +79,8 @@ model Resource {
   alerts             Alert[]
   savedItems         SavedItem[]
   changelog          Changelog[]
+  phaseResources     PhaseResource[]
+  curatedCollectionItems CuratedCollectionItem[]
 
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
@@ -205,6 +209,9 @@ model SavedItem {
   collectionId String?
   collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   
+  ideaId       String?
+  idea         ImplementationIdea? @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  
   createdAt    DateTime    @default(now())
 }
 
@@ -269,3 +276,147 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model ImplementationIdea {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  outcome         String   @db.Text
+  description     String?  @db.Text
+  targetAudience  String?  @db.Text
+  difficulty      String   // Beginner, Intermediate, Advanced
+  estimatedTime   String
+  estimatedCost   String
+  category        String   // Creator Economy, SaaS & Startups, Freelancing & Business, Content & Media, Digital Products
+  coverImage      String?
+  featured        Boolean  @default(false)
+  status          String   @default("PUBLISHED")
+  keywords        String[] @default([])
+
+  phases          ImplementationPhase[]
+  actionPlans     IdeaActionPlan[]
+  progress        UserIdeaProgress[]
+  savedItems      SavedItem[]
+  collectionItems CuratedCollectionItem[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ImplementationPhase {
+  id                String   @id @default(cuid())
+  ideaId            String
+  idea              ImplementationIdea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  title             String
+  description       String?  @db.Text
+  outcome           String?  @db.Text
+  position          Int
+  estimatedDuration String?
+
+  tasks             ImplementationTask[]
+  resources         PhaseResource[]
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model ImplementationTask {
+  id          String   @id @default(cuid())
+  phaseId     String
+  phase       ImplementationPhase @relation(fields: [phaseId], references: [id], onDelete: Cascade)
+  title       String
+  description String?  @db.Text
+  position    Int
+  isOptional  Boolean  @default(false)
+
+  userProgress UserTaskProgress[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PhaseResource {
+  id           String   @id @default(cuid())
+  phaseId      String
+  phase        ImplementationPhase @relation(fields: [phaseId], references: [id], onDelete: Cascade)
+  resourceId   String?
+  resource     Resource? @relation(fields: [resourceId], references: [id], onDelete: SetNull)
+  name         String
+  websiteUrl   String
+  purpose      String?  @db.Text
+  pricingModel String   // Free, Freemium, Paid
+  hasFreeTier  Boolean  @default(false)
+  isEssential  Boolean  @default(true)
+  position     Int
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model IdeaActionPlan {
+  id          String   @id @default(cuid())
+  ideaId      String
+  idea        ImplementationIdea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  stepNumber  Int
+  title       String
+  description String?  @db.Text
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CuratedCollection {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String   @db.Text
+  category    String?
+  coverImage  String?
+  featured    Boolean  @default(false)
+
+  items       CuratedCollectionItem[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CuratedCollectionItem {
+  id           String             @id @default(cuid())
+  collectionId String
+  collection   CuratedCollection  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  ideaId       String?
+  idea         ImplementationIdea? @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  resourceId   String?
+  resource     Resource?          @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  position     Int
+
+  createdAt    DateTime           @default(now())
+}
+
+model UserIdeaProgress {
+  id        String             @id @default(cuid())
+  userId    String
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ideaId    String
+  idea      ImplementationIdea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  startedAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  @@unique([userId, ideaId])
+}
+
+model UserTaskProgress {
+  id          String             @id @default(cuid())
+  userId      String
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taskId      String
+  task        ImplementationTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  completed   Boolean            @default(false)
+  completedAt DateTime?
+
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@unique([userId, taskId])
+}
+

@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import BookmarkList from "@/components/BookmarkList";
-import { Bookmark, Folder, Search, Settings } from "lucide-react";
+import { Bookmark, Folder, Rocket, Settings } from "lucide-react";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -55,6 +55,10 @@ export default async function DashboardPage() {
             <Link href="/dashboard" className="w-full flex items-center gap-3 px-4 py-3 bg-zinc-900 text-emerald-400 rounded-xl font-semibold border border-zinc-800 transition-colors">
               <Bookmark size={18} />
               All Bookmarks
+            </Link>
+            <Link href="/dashboard/roadmaps" className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-900/50 text-zinc-400 hover:text-white rounded-xl font-medium transition-colors">
+              <Rocket size={18} />
+              Active Roadmaps
             </Link>
             <Link href="/collections" className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-900/50 text-zinc-400 hover:text-white rounded-xl font-medium transition-colors">
               <Folder size={18} />

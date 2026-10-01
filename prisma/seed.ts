@@ -1,15 +1,25 @@
 import { PrismaClient } from '@prisma/client'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
+import { IMPLEMENTATION_IDEAS, CURATED_COLLECTIONS } from '../src/data/implement-ideas-data'
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL })
 const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
-  console.log('Seeding database with high-intent collections...')
+  console.log('Seeding database with high-intent collections & implementation ideas...')
 
   // 1. Clear existing data (optional but good for clean seed)
+  await prisma.curatedCollectionItem.deleteMany()
+  await prisma.curatedCollection.deleteMany()
+  await prisma.phaseResource.deleteMany()
+  await prisma.userTaskProgress.deleteMany()
+  await prisma.userIdeaProgress.deleteMany()
+  await prisma.implementationTask.deleteMany()
+  await prisma.implementationPhase.deleteMany()
+  await prisma.ideaActionPlan.deleteMany()
+  await prisma.implementationIdea.deleteMany()
   await prisma.collectionStep.deleteMany()
   await prisma.collection.deleteMany()
   await prisma.resourceMetadata.deleteMany()
@@ -32,6 +42,10 @@ async function main() {
 
   const categoryAI = await prisma.category.create({
     data: { name: 'Artificial Intelligence', slug: 'ai', description: 'AI tools and models.' }
+  })
+
+  const categoryCreator = await prisma.category.create({
+    data: { name: 'Creator & Media', slug: 'creator-media', description: 'Tools for YouTubers, video editors, and audio creators.' }
   })
 
   // 3. Create Resources
@@ -157,6 +171,66 @@ async function main() {
     }
   })
 
+  const canva = await prisma.resource.create({
+    data: {
+      title: 'Canva',
+      url: 'https://canva.com',
+      description: 'Design high-converting YouTube thumbnails, channel banners, and visual assets with ready-to-use templates.',
+      category: { connect: { id: categoryCreator.id } },
+      pricingModel: 'Freemium',
+      freeTier: true,
+      supportedCountries: 'Global',
+      verificationDate: new Date(),
+      status: 'ACTIVE',
+      score: 4.9
+    }
+  })
+
+  const davinci = await prisma.resource.create({
+    data: {
+      title: 'DaVinci Resolve',
+      url: 'https://www.blackmagicdesign.com/products/davinciresolve',
+      description: 'Hollywood-grade, professional free video editing, color grading, audio post-production, and visual effects.',
+      category: { connect: { id: categoryCreator.id } },
+      pricingModel: 'Free (Pro Studio available)',
+      freeTier: true,
+      supportedCountries: 'Global',
+      verificationDate: new Date(),
+      status: 'ACTIVE',
+      score: 5.0
+    }
+  })
+
+  const obs = await prisma.resource.create({
+    data: {
+      title: 'OBS Studio',
+      url: 'https://obsproject.com',
+      description: 'Free and open source software for video recording and live streaming on Windows, Mac, and Linux.',
+      category: { connect: { id: categoryCreator.id } },
+      pricingModel: 'Free',
+      freeTier: true,
+      supportedCountries: 'Global',
+      verificationDate: new Date(),
+      status: 'ACTIVE',
+      score: 4.9
+    }
+  })
+
+  const vidiq = await prisma.resource.create({
+    data: {
+      title: 'VidIQ',
+      url: 'https://vidiq.com',
+      description: 'AI-driven YouTube SEO, keyword research, tag suggestions, competitor tracking, and daily viral video ideas.',
+      category: { connect: { id: categoryCreator.id } },
+      pricingModel: 'Freemium',
+      freeTier: true,
+      supportedCountries: 'Global',
+      verificationDate: new Date(),
+      status: 'ACTIVE',
+      score: 4.8
+    }
+  })
+
 
   // 4. Create Collections
   // Collection 1: USD remote jobs
@@ -267,6 +341,118 @@ async function main() {
       }
     }
   })
+
+  // Collection 6: YouTube Career Launchpad
+  await prisma.collection.create({
+    data: {
+      title: 'YouTube Career: From Zero to Monetization',
+      slug: 'youtube-career-launchpad',
+      outcome: 'Launch and scale a high-quality YouTube channel with zero upfront budget using the best free and freemium creator tools.',
+      audience: 'Aspiring YouTubers, Content Creators, Solo Educators',
+      constraints: 'Requires computer, microphone, and consistent posting schedule',
+      difficulty: 'Beginner to Intermediate',
+      timeToResult: '1-3 months',
+      cost: '$0 (100% Free Tools)',
+      actionPlan: '1. Brainstorm viral topics and write video outlines using ChatGPT. 2. Record crisp 1080p/4K screen and camera footage with OBS Studio. 3. Cut, color-grade, and polish audio with DaVinci Resolve. 4. Create high-CTR click-worthy thumbnails with Canva. 5. Optimize video titles, tags, and SEO ranking using VidIQ.',
+      lastVerified: new Date(),
+      steps: {
+        create: [
+          { order: 1, title: '1. Scripting & Idea Generation', description: 'Use ChatGPT to outline engaging video hooks, full scripts, and content calendars.', resourceId: chatgpt.id },
+          { order: 2, title: '2. Screen & Video Recording', description: 'Use OBS Studio for high-definition desktop capture, facecam recording, and multi-source streaming.', resourceId: obs.id },
+          { order: 3, title: '3. Professional Video Editing', description: 'Cut footage, add B-roll, sync voiceovers, and color grade using DaVinci Resolve.', resourceId: davinci.id },
+          { order: 4, title: '4. Thumbnail & Visual Packaging', description: 'Design click-worthy YouTube thumbnails (1280x720) and channel banners with Canva.', resourceId: canva.id },
+          { order: 5, title: '5. YouTube SEO & Tag Optimization', description: 'Analyze high-volume search keywords, track competitor views, and optimize tags with VidIQ.', resourceId: vidiq.id }
+        ]
+      }
+    }
+  })
+
+  console.log('Seeding 5 Implementation Packs...')
+  for (const ideaData of IMPLEMENTATION_IDEAS) {
+    const createdIdea = await prisma.implementationIdea.create({
+      data: {
+        title: ideaData.title,
+        slug: ideaData.slug,
+        category: ideaData.category,
+        difficulty: ideaData.difficulty,
+        estimatedTime: ideaData.estimatedTime,
+        estimatedCost: ideaData.estimatedCost,
+        featured: ideaData.featured ?? false,
+        outcome: ideaData.outcome,
+        description: ideaData.description,
+        targetAudience: ideaData.targetAudience,
+        keywords: ideaData.keywords,
+        actionPlans: {
+          create: ideaData.actionPlan.map(step => ({
+            stepNumber: step.stepNumber,
+            title: step.title,
+            description: step.description
+          }))
+        }
+      }
+    })
+
+    for (const phaseData of ideaData.phases) {
+      await prisma.implementationPhase.create({
+        data: {
+          ideaId: createdIdea.id,
+          title: phaseData.title,
+          description: phaseData.description,
+          outcome: phaseData.outcome,
+          position: phaseData.position,
+          estimatedDuration: phaseData.estimatedDuration,
+          tasks: {
+            create: phaseData.tasks.map(t => ({
+              title: t.title,
+              description: t.description,
+              position: t.position,
+              isOptional: t.isOptional ?? false
+            }))
+          },
+          resources: {
+            create: phaseData.resources.map(r => ({
+              name: r.name,
+              websiteUrl: r.websiteUrl,
+              purpose: r.purpose,
+              pricingModel: r.pricingModel,
+              hasFreeTier: r.hasFreeTier,
+              isEssential: r.isEssential ?? true,
+              position: r.position
+            }))
+          }
+        }
+      })
+    }
+  }
+
+  console.log('Seeding 10 Curated Collections...')
+  for (const colData of CURATED_COLLECTIONS) {
+    const createdCol = await prisma.curatedCollection.create({
+      data: {
+        title: colData.title,
+        slug: colData.slug,
+        category: colData.category,
+        description: colData.description,
+        featured: colData.featured ?? false
+      }
+    })
+
+    for (const item of colData.items) {
+      let matchedIdeaId: string | undefined = undefined
+      if (item.ideaSlug) {
+        const idea = await prisma.implementationIdea.findUnique({ where: { slug: item.ideaSlug } })
+        if (idea) matchedIdeaId = idea.id
+      }
+
+      await prisma.curatedCollectionItem.create({
+        data: {
+          collectionId: createdCol.id,
+          ideaId: matchedIdeaId,
+          position: item.position
+        }
+      })
+    }
+  }
 
   console.log('Seeding completed successfully!')
 }

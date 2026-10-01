@@ -1,93 +1,109 @@
+import { prisma } from "@/lib/prisma";
+import Navbar from "@/components/Navbar";
+import CollectionCard from "@/components/CollectionCard";
+import { CURATED_COLLECTIONS } from "@/data/implement-ideas-data";
+import { Sparkles, Layers, FolderHeart } from "lucide-react";
+import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import Navbar from "@/components/Navbar";
-import Link from "next/link";
-import { Bookmark, Folder, Settings, ExternalLink } from "lucide-react";
-import CreateCollectionButton from "@/components/CreateCollectionButton";
-import { prisma } from "@/lib/prisma";
 
-export default async function CollectionsPage() {
+export const metadata = {
+  title: "Creative Collections | Linkora",
+  description: "Themed groups of curated resources and implementation blueprints organized by outcome.",
+};
+
+export default async function CollectionsDirectoryPage() {
   const session = await getServerSession(authOptions);
+  let collections = CURATED_COLLECTIONS;
 
-  if (!session?.user) {
-    redirect("/login");
+  try {
+    const dbCollections = await prisma.curatedCollection.findMany({
+      include: {
+        items: true,
+      },
+      orderBy: { createdAt: "asc" },
+    });
+
+    if (dbCollections && dbCollections.length > 0) {
+      collections = dbCollections.map((c) => ({
+        id: c.id,
+        title: c.title,
+        slug: c.slug,
+        description: c.description,
+        category: c.category || "Curated",
+        featured: c.featured,
+        items: c.items.map((item) => ({
+          ideaSlug: undefined,
+          position: item.position,
+        })),
+      }));
+    }
+  } catch {
+    collections = CURATED_COLLECTIONS;
   }
 
-  const collections = await prisma.collection.findMany({
-    where: { userId: session.user.id },
-    orderBy: { createdAt: 'desc' }
-  });
+  // Also query count of user personal collections if logged in
+  let userPersonalCollectionCount = 0;
+  if (session?.user) {
+    try {
+      userPersonalCollectionCount = await prisma.collection.count({
+        where: { userId: session.user.id },
+      });
+    } catch {
+      // ignore
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-black text-white selection:bg-emerald-500/30 pb-24">
       <Navbar />
-      
-      <main className="max-w-7xl mx-auto px-8 pt-32 pb-16">
-        <header className="mb-12">
-          <h1 className="text-4xl font-extrabold tracking-tight mb-3">
-            Your Collections
-          </h1>
-          <p className="text-zinc-400 text-lg">
-            Organize your saved resources into custom collections.
-          </p>
-        </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <aside className="lg:col-span-1 space-y-2">
-            <Link href="/dashboard" className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-900/50 text-zinc-400 hover:text-white rounded-xl font-medium transition-colors">
-              <Bookmark size={18} />
-              All Bookmarks
-            </Link>
-            <Link href="/collections" className="w-full flex items-center gap-3 px-4 py-3 bg-zinc-900 text-emerald-400 rounded-xl font-semibold border border-zinc-800 transition-colors">
-              <Folder size={18} />
-              Collections
-            </Link>
-            <Link href="/settings" className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-900/50 text-zinc-400 hover:text-white rounded-xl font-medium transition-colors">
-              <Settings size={18} />
-              Settings
-            </Link>
-          </aside>
+      {/* Hero Section */}
+      <section className="pt-32 pb-16 border-b border-zinc-900 bg-gradient-to-b from-zinc-950 via-zinc-900/40 to-black text-center relative overflow-hidden">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-teal-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            <div className="bg-zinc-900/50 border border-zinc-800 backdrop-blur-xl rounded-2xl p-8 min-h-[500px]">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-xl font-bold">Collections</h2>
-                
-                <CreateCollectionButton variant="primary" />
-              </div>
-
-              {collections.length === 0 ? (
-                <div className="flex flex-col items-center justify-center text-center h-64 bg-zinc-950/50 rounded-xl border border-zinc-800/50 border-dashed">
-                  <div className="w-12 h-12 bg-zinc-900 rounded-full flex items-center justify-center mb-4 text-zinc-500">
-                    <Folder size={24} />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">No collections yet</h3>
-                  <p className="text-zinc-500 text-sm max-w-sm mb-6">
-                    Collections help you group your bookmarks by project, topic, or whatever makes sense to you.
-                  </p>
-                  <CreateCollectionButton variant="secondary" />
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {collections.map(col => (
-                    <div key={col.id} className="p-5 bg-zinc-950/80 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Folder className="text-emerald-500" size={20} />
-                        <h3 className="font-bold text-white text-lg">{col.title}</h3>
-                      </div>
-                      <p className="text-sm text-zinc-500 mb-4">{col.outcome}</p>
-                      <button className="text-xs font-semibold text-zinc-400 hover:text-white transition-colors">
-                        View Items →
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+        <div className="max-w-4xl mx-auto px-6 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold tracking-widest uppercase mb-6">
+            <Sparkles size={14} />
+            <span>OUTCOME-BASED DISCOVERY</span>
           </div>
+
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6">
+            Curated <span className="text-emerald-500">Collections</span>
+          </h1>
+
+          <p className="text-zinc-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
+            Explore themed toolkits and execution roadmaps grouped by real-world goals—find the exact combination of tools you need without guessing.
+          </p>
+
+          {session?.user && userPersonalCollectionCount > 0 && (
+            <div className="inline-flex items-center gap-2 text-xs text-zinc-400 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-full">
+              <FolderHeart size={14} className="text-emerald-400" />
+              <span>You have {userPersonalCollectionCount} personal collection(s).</span>
+              <Link href="/dashboard" className="text-emerald-400 hover:underline font-semibold ml-1">
+                View in Dashboard →
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Grid Section */}
+      <main className="max-w-6xl mx-auto px-6 pt-16">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+            <Layers size={22} className="text-emerald-400" />
+            <span>High-Intent Collections ({collections.length})</span>
+          </h2>
+          <span className="text-xs text-zinc-500 font-medium">
+            Vetted for real utility
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {collections.map((col) => (
+            <CollectionCard key={col.slug} collection={col} />
+          ))}
         </div>
       </main>
     </div>

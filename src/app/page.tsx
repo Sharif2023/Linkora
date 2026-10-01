@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Zap, FileText, BrainCircuit } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { Link2 } from "@/components/CategoryIcons";
 import Navbar from "@/components/Navbar";
 
 const ThreeVisual = dynamic(() => import("@/components/ThreeVisual"), { ssr: false });
@@ -92,7 +92,7 @@ export default function Home() {
       {/* ── 2. Value Proposition & Step-by-Step ─────────────────────────── */}
       <section className="py-32 px-6 md:px-8 relative z-10 bg-zinc-950 border-t border-zinc-900 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -104,7 +104,7 @@ export default function Home() {
               <span className="text-emerald-500">Start executing stacks.</span>
             </h2>
             <p className="text-zinc-400 text-xl leading-relaxed">
-              Linkora isn't another generic AI directory. It's a curated operating system of proven tools, organized by the exact outcomes you need to achieve.
+              Linkora isn&apos;t another generic AI directory. It&apos;s a curated operating system of proven tools, organized by the exact outcomes you need to achieve.
             </p>
           </motion.div>
 
@@ -112,7 +112,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 relative">
             {/* Connecting Line (Desktop) */}
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-zinc-900 via-emerald-500/30 to-zinc-900 z-0" />
-            
+
             {[
               {
                 step: "01",
@@ -130,7 +130,7 @@ export default function Home() {
                 desc: "Follow step-by-step playbooks that string the right tools together in the exact order you need them to succeed."
               }
             ].map((item, i) => (
-              <motion.div 
+              <motion.div
                 key={item.step}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -153,9 +153,9 @@ export default function Home() {
       <section className="py-32 px-6 md:px-8 bg-black relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
+
             {/* Feature 1: Large Banner */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -169,7 +169,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">The ultimate intelligence workspace</h3>
                 <p className="text-zinc-400 text-xl mb-10 leading-relaxed">
-                  We've categorized over 250+ essential links and tools across 16 precise categories. Stop searching the web for tools you already know exist but forgot the name of.
+                  We&apos;ve categorized over 250+ essential links and tools across 16 precise categories. Stop searching the web for tools you already know exist but forgot the name of.
                 </p>
                 <Link href="/explore">
                   <button className="bg-emerald-500 text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-emerald-400 active:scale-95 transition-all shadow-lg shadow-emerald-500/20">
@@ -180,7 +180,7 @@ export default function Home() {
             </motion.div>
 
             {/* Feature 2: Small Card */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -200,7 +200,7 @@ export default function Home() {
             </motion.div>
 
             {/* Feature 3: Small Card */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -222,16 +222,30 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
+
       {/* ── 4. Footer ───────────────────────────── */}
       <footer className="border-t border-zinc-900 py-12 text-center w-full bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-2xl font-extrabold tracking-tight mb-8">Linkora</h2>
+
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <Link2 size="24" className="text-emerald-500" />
+            <h2 className="text-2xl font-extrabold tracking-tight">Linkora</h2>
+          </div>
+
           <p className="text-sm text-zinc-500 font-mono mb-4">
             &copy; {new Date().getFullYear()} Linkora - Intelligence Workspace. All links indexed securely.
           </p>
+
           <p className="text-sm text-zinc-500 font-mono">
-            Designed & Built by <a href="https://si-sharif.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-emerald-500 hover:text-emerald-400 font-bold transition-colors">Shariful Islam</a>
+            Designed & Built by{" "}
+            <a
+              href="https://si-sharif.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-500 hover:text-emerald-400 font-bold transition-colors"
+            >
+              Shariful Islam
+            </a>
           </p>
         </div>
       </footer>
