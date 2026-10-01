@@ -16,7 +16,10 @@ export default async function DashboardPage() {
 
   // Fetch user's saved items (bookmarks) from DB
   const rawSavedItems = await prisma.savedItem.findMany({
-    where: { userId: session.user.id },
+    where: {
+      userId: session.user.id,
+      resourceId: { not: null },
+    },
     include: {
       resource: {
         include: {

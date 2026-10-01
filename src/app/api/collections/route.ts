@@ -13,15 +13,16 @@ export async function POST(req: Request) {
 
     const { title } = await req.json();
 
-    if (!title) {
+    if (!title || !title.trim()) {
       return NextResponse.json({ message: "Collection title is required" }, { status: 400 });
     }
 
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now();
+    const trimmedTitle = title.trim();
+    const slug = trimmedTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now();
 
     const collection = await prisma.collection.create({
       data: {
-        title,
+        title: trimmedTitle,
         slug,
         outcome: "Personal Collection",
         userId: session.user.id,

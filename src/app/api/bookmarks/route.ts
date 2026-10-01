@@ -18,6 +18,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Resource ID is required" }, { status: 400 });
     }
 
+    const existing = await prisma.savedItem.findFirst({
+      where: {
+        userId: session.user.id,
+        resourceId,
+      },
+    });
+
+    if (existing) {
+      return NextResponse.json({ message: "Bookmark already saved", savedItem: existing }, { status: 200 });
+    }
+
     const savedItem = await prisma.savedItem.create({
       data: {
         userId: session.user.id,

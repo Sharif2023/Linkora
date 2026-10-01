@@ -13,9 +13,10 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { name, email, password } = registerSchema.parse(body);
+    const normalizedEmail = email.toLowerCase().trim();
 
     const existingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { email: normalizedEmail },
     });
 
     if (existingUser) {
@@ -30,7 +31,7 @@ export async function POST(req: Request) {
     const user = await prisma.user.create({
       data: {
         name,
-        email,
+        email: normalizedEmail,
         password: hashedPassword,
       },
     });
