@@ -44,9 +44,9 @@ export default async function SettingsPage() {
               <Bookmark size={18} />
               All Bookmarks
             </Link>
-            <Link href="/collections" className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-900/50 text-zinc-400 hover:text-white rounded-xl font-medium transition-colors">
+            <Link href="/implement-ideas" className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-900/50 text-zinc-400 hover:text-white rounded-xl font-medium transition-colors">
               <Folder size={18} />
-              Collections
+              Explore Ideas
             </Link>
             <Link href="/settings" className="w-full flex items-center gap-3 px-4 py-3 bg-zinc-900 text-emerald-400 rounded-xl font-semibold border border-zinc-800 transition-colors">
               <Settings size={18} />

@@ -138,7 +138,7 @@ export default function ImplementIdeasHero({
           <div className="w-1 h-1 rounded-full bg-zinc-700 hidden sm:block" />
           <div className="flex items-center gap-2">
             <Layers size={16} className="text-teal-400" />
-            <span><strong className="text-white font-bold">{totalCollections}</strong> Curated Collections</span>
+            <span><strong className="text-white font-bold">{totalCollections}</strong> Thematic Stacks</span>
           </div>
           <div className="w-1 h-1 rounded-full bg-zinc-700 hidden sm:block" />
           <div className="flex items-center gap-2">

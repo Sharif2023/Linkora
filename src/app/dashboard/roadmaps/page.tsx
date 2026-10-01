@@ -90,11 +90,11 @@ export default async function DashboardRoadmapsPage() {
               Active Roadmaps
             </Link>
             <Link
-              href="/collections"
+              href="/implement-ideas"
               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-900/50 text-zinc-400 hover:text-white rounded-xl font-medium transition-colors"
             >
               <Folder size={18} />
-              Collections
+              Explore Ideas
             </Link>
             <Link
               href="/settings"
