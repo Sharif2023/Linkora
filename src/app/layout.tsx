@@ -14,8 +14,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Linkora - Intelligence Workspace",
-  description: "From raw data to actionable insight in milliseconds.",
+  title: "Linkora - Turn Great Ideas into Reality with Curated Stacks",
+  description: "Helping creators, developers, and founders turn ambitious ideas into reality with curated tool stacks, step-by-step blueprints, and execution roadmaps.",
 };
 
 export default function RootLayout({

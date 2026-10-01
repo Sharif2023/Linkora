@@ -10,9 +10,11 @@ import Navbar from "@/components/Navbar";
 const ThreeVisual = dynamic(() => import("@/components/ThreeVisual"), { ssr: false });
 
 import { linkCollections, CATEGORIES } from "@/data/links";
+import { IMPLEMENTATION_IDEAS, CURATED_COLLECTIONS } from "@/data/implement-ideas-data";
 
 const heroStats = [
-  { value: `${linkCollections.length}`, label: "Curated Links" },
+  { value: `${IMPLEMENTATION_IDEAS.length}`, label: "Idea Stacks" },
+  { value: `${linkCollections.length}`, label: "Curated Tools" },
   { value: `${CATEGORIES.length - 1}`, label: "Smart Categories" },
 ];
 
@@ -20,7 +22,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white selection:bg-emerald-500/30">
       <Navbar />
-      <section className="min-h-[85vh] flex flex-col items-center justify-center text-center relative z-10 px-8 pt-32 pb-16">
+      <section className="min-h-[88vh] flex flex-col items-center justify-center text-center relative z-10 px-8 pt-36 sm:pt-40 pb-20">
         {/* Three.js background */}
         <div className="absolute inset-0 z-[1] pointer-events-none">
           <ThreeVisual />
@@ -30,20 +32,20 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="relative z-10 bg-zinc-900 border border-zinc-800 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-bold mb-8 text-emerald-500"
+          className="relative z-10 bg-zinc-900 border border-zinc-800 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-bold mb-16 sm:mb-20 text-emerald-500"
         >
-          ● Now in Private Beta — Linkora Workspace
+          ● Grouped Idea Stacks & Actionable Blueprints
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="relative z-10 text-[clamp(2.8rem,6vw,5rem)] font-extrabold tracking-tight leading-[1.08] max-w-3xl mb-6 pointer-events-none"
+          className="relative z-10 text-[clamp(2.4rem,5.2vw,4.5rem)] font-extrabold tracking-tight leading-[1.15] max-w-4xl mb-6 pointer-events-none"
         >
-          All Your AI Links in{" "}
-          <span className="text-emerald-500">
-            One Smart Workspace
+          <span className="block">Turn Great Ideas into Reality</span>
+          <span className="text-emerald-500 block mt-2 sm:mt-3">
+            with Curated Stacks
           </span>
         </motion.h1>
 
@@ -51,10 +53,9 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative z-10 text-xl text-zinc-400 max-w-xl leading-relaxed mb-12 pointer-events-none"
+          className="relative z-10 text-xl text-zinc-400 max-w-xl leading-relaxed mb-8 pointer-events-none"
         >
-          Linkora organizes, categorizes, and speed-dials all your AI tools and essential web links
-          — giving developers and teams one-click clarity.
+          Linkora groups high-impact ideas with the exact tools, blueprints, and roadmaps you need to build and launch.
         </motion.p>
 
         <motion.div
@@ -63,14 +64,16 @@ export default function Home() {
           transition={{ duration: 0.7, delay: 0.45 }}
           className="relative z-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 sm:px-0"
         >
-          <Link href="/explore" className="w-full sm:w-auto">
+          <Link href="/implement-ideas" className="w-full sm:w-auto">
             <button className="w-full sm:w-auto bg-emerald-500 text-white px-10 py-4 rounded-full text-base font-bold hover:bg-emerald-400 active:scale-95 transition-all shadow-lg shadow-emerald-500/20">
-              Explore Now →
+              Explore Idea Stacks →
             </button>
           </Link>
-          <button className="w-full sm:w-auto border border-zinc-800 text-zinc-300 px-10 py-4 rounded-full text-base font-bold hover:bg-zinc-900 active:scale-95 transition-all">
-            ▶ Watch Demo
-          </button>
+          <Link href="/explore" className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto border border-zinc-800 text-zinc-300 px-10 py-4 rounded-full text-base font-bold hover:bg-zinc-900 active:scale-95 transition-all">
+              Browse Tool Directory
+            </button>
+          </Link>
         </motion.div>
 
         {/* Stats row */}
@@ -101,10 +104,10 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
               Stop hoarding bookmarks. <br className="hidden md:block" />
-              <span className="text-emerald-500">Start executing stacks.</span>
+              <span className="text-emerald-500">Start executing idea stacks.</span>
             </h2>
             <p className="text-zinc-400 text-xl leading-relaxed">
-              Linkora isn&apos;t another generic AI directory. It&apos;s a curated operating system of proven tools, organized by the exact outcomes you need to achieve.
+              Linkora isn&apos;t another generic AI directory. It&apos;s a curated launchpad grouping the exact tools, architectures, and execution roadmaps you need to build and ship your ideas.
             </p>
           </motion.div>
 
@@ -116,18 +119,18 @@ export default function Home() {
             {[
               {
                 step: "01",
-                title: "Discover by Outcome",
-                desc: "Find workflows based on your exact goal—whether it's launching an indie app, automating your marketing, or building a remote career."
+                title: "Choose an Idea Stack",
+                desc: "Explore blueprints organized by outcome—launching a Micro-SaaS, building a creator channel, or starting a modern agency."
               },
               {
                 step: "02",
-                title: "Verify the Tools",
-                desc: "Every single resource is manually vetted for hidden costs, real free tiers, and actual utility. Zero fluff, pure value."
+                title: "Get the Vetted Stack",
+                desc: "Every idea is paired with a handpicked cluster of complementary tools with verified pricing, free tiers, and zero fluff."
               },
               {
                 step: "03",
-                title: "Execute the Plan",
-                desc: "Follow step-by-step playbooks that string the right tools together in the exact order you need them to succeed."
+                title: "Execute the Roadmap",
+                desc: "Follow phase-by-phase action plans with milestones, time estimates, and step-by-step tasks to bring the idea to life."
               }
             ].map((item, i) => (
               <motion.div
@@ -165,15 +168,15 @@ export default function Home() {
               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-emerald-500/20 transition-all duration-700" />
               <div className="relative z-10 max-w-2xl">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-950 border border-zinc-800 text-sm font-bold text-zinc-400 mb-8">
-                  <BrainCircuit size={16} className="text-emerald-500" /> 250+ Resources Indexed
+                  <BrainCircuit size={16} className="text-emerald-500" /> Complete Idea Blueprints
                 </div>
-                <h3 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">The ultimate intelligence workspace</h3>
+                <h3 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Everything your idea needs, organized in one place</h3>
                 <p className="text-zinc-400 text-xl mb-10 leading-relaxed">
-                  We&apos;ve categorized over 250+ essential links and tools across 16 precise categories. Stop searching the web for tools you already know exist but forgot the name of.
+                  Every idea is backed by phased action plans, vetted tech stacks, difficulty ratings, and progress tracking. Whether building a Micro-SaaS, launching an audience newsletter, or scaling a creator channel, Linkora gives you the exact blueprint.
                 </p>
-                <Link href="/explore">
+                <Link href="/implement-ideas">
                   <button className="bg-emerald-500 text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-emerald-400 active:scale-95 transition-all shadow-lg shadow-emerald-500/20">
-                    Access Directory Now
+                    Explore Implement Ideas →
                   </button>
                 </Link>
               </div>
