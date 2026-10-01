@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ArrowLeft, Bookmark, Check, CheckCircle2, ChevronDown, ChevronUp,
+  ArrowLeft, Bookmark, Check, ChevronDown, ChevronUp,
   Clock, DollarSign, ExternalLink, Layers, Sparkles, Target, Zap, RotateCcw, AlertTriangle
 } from "lucide-react";
-import { ImplementationIdeaData, IdeaPhase, IdeaResource, IdeaTask } from "@/types/implement-ideas";
+import { ImplementationIdeaData, IdeaTask } from "@/types/implement-ideas";
 import MilestoneCelebration from "./MilestoneCelebration";
 
 interface RoadmapDetailClientProps {
@@ -31,7 +31,6 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
   const totalTasksCount = allTasks.length;
   const completedCount = completedTaskIds.length;
   const progressPercent = totalTasksCount > 0 ? (completedCount / totalTasksCount) * 100 : 0;
-  const isAllFinished = totalTasksCount > 0 && completedCount === totalTasksCount;
 
   // Load progress and bookmark state on mount
   useEffect(() => {
@@ -73,7 +72,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
             setIsBookmarked(true);
           }
         }
-      } catch (err) {
+      } catch {
         // ignore
       }
     }
@@ -94,7 +93,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
     // Save to localStorage for guest persistence
     try {
       localStorage.setItem(`linkora_progress_${idea.slug}`, JSON.stringify(newCompleted));
-    } catch (e) {}
+    } catch {}
 
     // Check if phase was just completed
     const currentPhase = idea.phases[phaseIndex];
@@ -131,7 +130,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
           completed: !isCurrentlyDone,
         }),
       });
-    } catch (e) {
+    } catch {
       // guest state already preserved locally
     }
   };
@@ -151,7 +150,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
         list = list.filter((s: string) => s !== idea.slug);
       }
       localStorage.setItem("linkora_guest_bookmarks", JSON.stringify(list));
-    } catch (e) {}
+    } catch {}
 
     // Server call
     try {
@@ -160,7 +159,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ideaId: idea.id || idea.slug }),
       });
-    } catch (e) {}
+    } catch {}
   };
 
   // Reset Progress
@@ -176,7 +175,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
           ideaId: idea.id || idea.slug,
         }),
       });
-    } catch (e) {}
+    } catch {}
     setShowResetConfirm(false);
   };
 

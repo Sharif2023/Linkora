@@ -66,7 +66,7 @@ export default function ImplementIdeasClient({
           });
           setUserProgressMap(map);
         }
-      } catch (e) {
+      } catch {
         // ignore
       }
     }
