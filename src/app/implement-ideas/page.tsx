@@ -73,6 +73,7 @@ export default async function ImplementIdeasPage() {
             position: r.position,
           })),
         })),
+        toolGroups: IMPLEMENTATION_IDEAS.find((i) => i.slug === dbIdea.slug)?.toolGroups || [],
       }));
     } else {
       ideas = IMPLEMENTATION_IDEAS;

@@ -16,7 +16,16 @@ export interface IdeaResource {
   pricingModel: PricingModel;
   hasFreeTier: boolean;
   isEssential?: boolean;
-  position: number;
+  position?: number;
+  groupName?: string;
+}
+
+export interface IdeaToolGroup {
+  name: string;
+  tag: string;
+  description: string;
+  icon?: string;
+  tools: IdeaResource[];
 }
 
 export interface IdeaTask {
@@ -60,6 +69,7 @@ export interface ImplementationIdeaData {
   keywords: string[];
   actionPlan: ActionPlanStep[];
   phases: IdeaPhase[];
+  toolGroups?: IdeaToolGroup[];
 }
 
 export interface CuratedCollectionItemData {

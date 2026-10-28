@@ -69,12 +69,34 @@ export default function ExploreClient({
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  const filteredResources = resources.filter(r => {
-    const matchesCategory = activeCategory ? r.categoryId === activeCategory : true;
-    const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          r.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  const filteredResources = resources
+    .filter(r => {
+      const matchesCategory = activeCategory ? r.categoryId === activeCategory : true;
+      const q = searchQuery.toLowerCase().trim();
+      if (!q) return matchesCategory;
+      const matchesSearch = r.title.toLowerCase().includes(q) || 
+                            r.description.toLowerCase().includes(q);
+      return matchesCategory && matchesSearch;
+    })
+    .sort((a, b) => {
+      const q = searchQuery.toLowerCase().trim();
+      if (!q) return 0;
+      const aTitle = a.title.toLowerCase();
+      const bTitle = b.title.toLowerCase();
+      const aExact = aTitle === q;
+      const bExact = bTitle === q;
+      if (aExact && !bExact) return -1;
+      if (!aExact && bExact) return 1;
+      const aStarts = aTitle.startsWith(q);
+      const bStarts = bTitle.startsWith(q);
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+      const aIncludes = aTitle.includes(q);
+      const bIncludes = bTitle.includes(q);
+      if (aIncludes && !bIncludes) return -1;
+      if (!aIncludes && bIncludes) return 1;
+      return 0;
+    });
 
   return (
     <div className="flex h-screen pt-16 overflow-hidden max-w-[1400px] mx-auto w-full relative">

@@ -44,10 +44,12 @@ export default function IdeaCard({ idea, progressPercent }: IdeaCardProps) {
   const categoryColorClass = getCategoryColor(idea.category);
   const difficultyBadgeClass = getDifficultyBadge(idea.difficulty);
 
-  const totalTools = idea.phases?.reduce(
-    (acc, phase) => acc + (phase.resources?.length || 0),
-    0
-  ) || 0;
+  const totalTools = idea.toolGroups && idea.toolGroups.length > 0
+    ? idea.toolGroups.reduce((acc, g) => acc + g.tools.length, 0)
+    : idea.phases?.reduce(
+        (acc, phase) => acc + (phase.resources?.length || 0),
+        0
+      ) || 0;
 
   const hasStarted = typeof progressPercent === "number" && progressPercent > 0;
   const isCompleted = typeof progressPercent === "number" && progressPercent >= 100;
@@ -91,12 +93,32 @@ export default function IdeaCard({ idea, progressPercent }: IdeaCardProps) {
           </h3>
 
           {/* Outcome */}
-          <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mb-6 line-clamp-3">
+          <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mb-5 line-clamp-2">
             {idea.outcome}
           </p>
 
+          {/* Tool Group Badges */}
+          {idea.toolGroups && idea.toolGroups.length > 0 && (
+            <div className="mb-5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 mb-2">
+                Curated Tool Stacks
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {idea.toolGroups.map((g) => (
+                  <span
+                    key={g.name}
+                    className="px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-950/70 border border-zinc-800 text-zinc-300 group-hover:border-emerald-500/30 group-hover:text-emerald-400 transition-colors flex items-center gap-1"
+                  >
+                    <span>{g.name}</span>
+                    <span className="text-[10px] text-zinc-500 font-mono">({g.tools.length})</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Execution Specs Chips */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 py-4 border-y border-zinc-800/80 text-xs text-zinc-400 mb-6 bg-zinc-950/40 rounded-xl px-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 py-3.5 border-y border-zinc-800/80 text-xs text-zinc-400 mb-5 bg-zinc-950/40 rounded-xl px-3">
             <div className="flex items-center gap-1.5" title="Estimated Time">
               <Clock size={14} className="text-zinc-500 shrink-0" />
               <span className="truncate">{idea.estimatedTime}</span>
@@ -142,7 +164,7 @@ export default function IdeaCard({ idea, progressPercent }: IdeaCardProps) {
           ) : null}
 
           <div className="flex items-center justify-between text-sm font-semibold text-emerald-400 group-hover:text-emerald-300">
-            <span>{hasStarted ? "Resume roadmap" : "Explore roadmap"}</span>
+            <span>{hasStarted ? "Resume blueprint" : "View Grouped Tools & Blueprint"}</span>
             <ArrowRight
               size={16}
               className="transform group-hover:translate-x-1.5 transition-transform"

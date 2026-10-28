@@ -1,23 +1,47 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft, Bookmark, Check, ChevronDown, ChevronUp,
-  Clock, DollarSign, ExternalLink, Layers, Sparkles, Target, Zap, RotateCcw, AlertTriangle
+  Clock, DollarSign, ExternalLink, Layers, Sparkles, Target, Zap, RotateCcw, AlertTriangle,
+  Search, Copy, CheckCheck, Paintbrush, Film, Bot, Mic, Share2, Code, Cloud,
+  BarChart3, Briefcase, Mail, ShoppingBag, Radio, FileText, Wrench
 } from "lucide-react";
-import { ImplementationIdeaData, IdeaTask } from "@/types/implement-ideas";
+import { ImplementationIdeaData, IdeaTask, IdeaToolGroup, IdeaResource } from "@/types/implement-ideas";
 import MilestoneCelebration from "./MilestoneCelebration";
 
 interface RoadmapDetailClientProps {
   idea: ImplementationIdeaData;
 }
 
+const getGroupIcon = (tagOrIcon?: string) => {
+  const key = (tagOrIcon || "").toLowerCase();
+  if (key.includes("seo") || key.includes("search") || key.includes("validation")) return <Search size={18} />;
+  if (key.includes("thumbnail") || key.includes("design") || key.includes("visual") || key.includes("art")) return <Paintbrush size={18} />;
+  if (key.includes("video") || key.includes("film") || key.includes("edit")) return <Film size={18} />;
+  if (key.includes("ai") || key.includes("bot") || key.includes("voice")) return <Bot size={18} />;
+  if (key.includes("mic") || key.includes("audio") || key.includes("record")) return <Mic size={18} />;
+  if (key.includes("distribut") || key.includes("growth") || key.includes("share")) return <Share2 size={18} />;
+  if (key.includes("dev") || key.includes("code") || key.includes("stack")) return <Code size={18} />;
+  if (key.includes("cloud") || key.includes("host")) return <Cloud size={18} />;
+  if (key.includes("analytics") || key.includes("chart")) return <BarChart3 size={18} />;
+  if (key.includes("market") || key.includes("portfolio") || key.includes("lead")) return <Briefcase size={18} />;
+  if (key.includes("mail") || key.includes("newsletter")) return <Mail size={18} />;
+  if (key.includes("store") || key.includes("checkout") || key.includes("payment")) return <ShoppingBag size={18} />;
+  if (key.includes("radio") || key.includes("rss")) return <Radio size={18} />;
+  if (key.includes("doc") || key.includes("content")) return <FileText size={18} />;
+  return <Wrench size={18} />;
+};
+
 export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) {
   const [completedTaskIds, setCompletedTaskIds] = useState<string[]>([]);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [openPhases, setOpenPhases] = useState<Record<number, boolean>>({ 1: true });
+  const [selectedGroupTag, setSelectedGroupTag] = useState<string>("ALL");
+  const [toolSearchQuery, setToolSearchQuery] = useState<string>("");
+  const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
   const [celebrationData, setCelebrationData] = useState<{
     isOpen: boolean;
     title: string;
@@ -31,6 +55,62 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
   const totalTasksCount = allTasks.length;
   const completedCount = completedTaskIds.length;
   const progressPercent = totalTasksCount > 0 ? (completedCount / totalTasksCount) * 100 : 0;
+
+  // Tool Groups resolution (fallback to phases resources if toolGroups empty)
+  const resolvedToolGroups: IdeaToolGroup[] = useMemo(() => {
+    if (idea.toolGroups && idea.toolGroups.length > 0) {
+      return idea.toolGroups;
+    }
+    // Fallback: Group phase resources
+    return (idea.phases || []).map((p) => ({
+      name: p.title,
+      tag: p.title.split(" ")[0] || "Tools",
+      description: p.description,
+      icon: "Wrench",
+      tools: p.resources || [],
+    }));
+  }, [idea]);
+
+  const allToolsCount = useMemo(() => {
+    return resolvedToolGroups.reduce((acc, g) => acc + g.tools.length, 0);
+  }, [resolvedToolGroups]);
+
+  // Filtered Tool Groups
+  const filteredToolGroups = useMemo(() => {
+    const query = toolSearchQuery.trim().toLowerCase();
+
+    return resolvedToolGroups
+      .map((group) => {
+        // Check if group matches selected group tag
+        const matchesTag = selectedGroupTag === "ALL" || group.tag === selectedGroupTag || group.name === selectedGroupTag;
+        if (!matchesTag) return null;
+
+        // Check search query across group name, description, and tools
+        if (!query) return group;
+
+        const groupMatches = group.name.toLowerCase().includes(query) || group.description.toLowerCase().includes(query);
+        const matchingTools = group.tools.filter(
+          (t) =>
+            t.name.toLowerCase().includes(query) ||
+            (t.purpose && t.purpose.toLowerCase().includes(query)) ||
+            (t.pricingModel && t.pricingModel.toLowerCase().includes(query))
+        );
+
+        if (groupMatches) {
+          return group;
+        }
+
+        if (matchingTools.length > 0) {
+          return {
+            ...group,
+            tools: matchingTools,
+          };
+        }
+
+        return null;
+      })
+      .filter((g): g is IdeaToolGroup => g !== null);
+  }, [resolvedToolGroups, selectedGroupTag, toolSearchQuery]);
 
   // Load progress and bookmark state on mount
   useEffect(() => {
@@ -102,7 +182,6 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
       const allPhaseTasksDone = phaseTaskIds.every((id) => newCompleted.includes(id));
 
       if (allPhaseTasksDone) {
-        // Trigger celebration!
         const isRoadmapDone = allTasks.every((t) => newCompleted.includes(t.id || t.title));
         setCelebrationData({
           isOpen: true,
@@ -119,7 +198,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
       }
     }
 
-    // Try server sync if authenticated
+    // Server sync
     try {
       await fetch("/api/ideas/progress", {
         method: "POST",
@@ -130,9 +209,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
           completed: !isCurrentlyDone,
         }),
       });
-    } catch {
-      // guest state already preserved locally
-    }
+    } catch {}
   };
 
   // Toggle Bookmark
@@ -140,7 +217,6 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
     const nextState = !isBookmarked;
     setIsBookmarked(nextState);
 
-    // Guest fallback
     try {
       const stored = localStorage.getItem("linkora_guest_bookmarks") || "[]";
       let list = JSON.parse(stored);
@@ -152,7 +228,6 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
       localStorage.setItem("linkora_guest_bookmarks", JSON.stringify(list));
     } catch {}
 
-    // Server call
     try {
       await fetch("/api/ideas/bookmark", {
         method: "POST",
@@ -186,11 +261,19 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
     }));
   };
 
-  const scrollToFirstPhase = () => {
-    const el = document.getElementById("roadmap-phases");
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleCopyUrl = (url: string) => {
+    navigator.clipboard.writeText(url);
+    setCopiedUrl(url);
+    setTimeout(() => {
+      setCopiedUrl(null);
+    }, 2000);
   };
 
   return (
@@ -205,10 +288,10 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
       />
 
       {/* Header Section */}
-      <section className="pt-28 pb-14 border-b border-zinc-900 bg-gradient-to-b from-zinc-950 via-zinc-900/30 to-black relative">
-        <div className="max-w-5xl mx-auto px-6">
+      <section className="pt-28 pb-12 border-b border-zinc-900 bg-gradient-to-b from-zinc-950 via-zinc-900/30 to-black relative">
+        <div className="max-w-6xl mx-auto px-6">
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-sm text-zinc-500 mb-8">
+          <div className="flex items-center gap-2 text-sm text-zinc-500 mb-6">
             <Link
               href="/implement-ideas"
               className="hover:text-emerald-400 flex items-center gap-1.5 transition-colors font-medium"
@@ -221,28 +304,31 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
           </div>
 
           {/* Category & Difficulty Header */}
-          <div className="flex flex-wrap items-center gap-3 mb-6">
+          <div className="flex flex-wrap items-center gap-3 mb-5">
             <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               {idea.category}
             </span>
             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-800 text-zinc-300 border border-zinc-700">
               {idea.difficulty}
             </span>
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-900 text-emerald-400 border border-zinc-800 flex items-center gap-1">
+              <Zap size={12} /> {allToolsCount} Curated Tools
+            </span>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 leading-tight">
             {idea.title}
           </h1>
 
           {/* Outcome */}
-          <p className="text-xl sm:text-2xl text-zinc-300 font-normal leading-relaxed mb-10 max-w-3xl">
+          <p className="text-lg sm:text-xl text-zinc-300 font-normal leading-relaxed mb-8 max-w-3xl">
             {idea.outcome}
           </p>
 
           {/* Target Audience Bar */}
           {idea.targetAudience && (
-            <div className="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-sm text-zinc-300 flex items-start gap-3 mb-10">
+            <div className="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-sm text-zinc-300 flex items-start gap-3 mb-8">
               <Target size={18} className="text-emerald-400 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-white font-semibold">Target Audience: </strong>
@@ -251,8 +337,8 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
             </div>
           )}
 
-          {/* Execution Specs Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 border-y border-zinc-800/80 text-sm text-zinc-400">
+          {/* Execution Specs Grid (Required by tests and UX) */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 border-y border-zinc-800/80 text-sm text-zinc-400 mb-8">
             <div>
               <div className="text-zinc-500 text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5 font-bold">
                 <Clock size={14} className="text-emerald-400" /> Time to Result
@@ -273,25 +359,33 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
             </div>
             <div>
               <div className="text-zinc-500 text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5 font-bold">
-                <Zap size={14} className="text-emerald-400" /> Total Tasks
+                <Zap size={14} className="text-emerald-400" /> Curated Tools
               </div>
-              <div className="text-base font-bold text-white">{totalTasksCount} Action Items</div>
+              <div className="text-base font-bold text-white">{allToolsCount} Sites in Stacks</div>
             </div>
           </div>
 
-          {/* Primary Action Controls */}
-          <div className="flex flex-wrap items-center gap-4 pt-8">
+          {/* Navigation Action Buttons */}
+          <div className="flex flex-wrap items-center gap-3.5">
             <button
-              onClick={scrollToFirstPhase}
-              className="bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-base px-8 py-3.5 rounded-full flex items-center gap-2 transition-all active:scale-95 shadow-lg shadow-emerald-500/20"
+              onClick={() => scrollToSection("grouped-tools")}
+              className="bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm sm:text-base px-6 py-3 rounded-full flex items-center gap-2 transition-all active:scale-95 shadow-lg shadow-emerald-500/20"
             >
-              <Sparkles size={18} />
-              <span>{completedCount > 0 ? "Resume Roadmap" : "Start This Roadmap"}</span>
+              <Wrench size={17} />
+              <span>Browse Grouped Tools ({allToolsCount})</span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("action-checklist")}
+              className="bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 font-semibold text-sm sm:text-base px-6 py-3 rounded-full flex items-center gap-2 transition-all active:scale-95"
+            >
+              <Sparkles size={17} className="text-emerald-400" />
+              <span>Execution Blueprint</span>
             </button>
 
             <button
               onClick={handleToggleBookmark}
-              className={`px-5 py-3.5 rounded-full text-sm font-semibold border flex items-center gap-2 transition-all active:scale-95 ${
+              className={`px-5 py-3 rounded-full text-sm font-semibold border flex items-center gap-2 transition-all active:scale-95 ${
                 isBookmarked
                   ? "bg-zinc-800 border-emerald-500/50 text-emerald-400"
                   : "bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-800"
@@ -304,7 +398,7 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
             {completedCount > 0 && (
               <button
                 onClick={() => setShowResetConfirm(true)}
-                className="px-4 py-3.5 rounded-full text-xs font-medium text-zinc-500 hover:text-rose-400 transition-colors flex items-center gap-1.5 ml-auto"
+                className="px-4 py-3 rounded-full text-xs font-medium text-zinc-500 hover:text-rose-400 transition-colors flex items-center gap-1.5 ml-auto"
                 title="Reset all completed tasks"
               >
                 <RotateCcw size={14} />
@@ -344,272 +438,493 @@ export default function RoadmapDetailClient({ idea }: RoadmapDetailClientProps) 
         </div>
       )}
 
-      {/* Sticky Progress Bar */}
-      <div className="sticky top-16 z-30 bg-zinc-950/90 border-b border-zinc-800 backdrop-blur-md py-4">
-        <div className="max-w-5xl mx-auto px-6 flex items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-              Roadmap Progress
-            </div>
-            <span className="text-sm font-bold text-emerald-400">
-              {completedCount} / {totalTasksCount} tasks ({Math.round(progressPercent)}%)
-            </span>
+      {/* Sticky Quick-Nav & Progress Bar */}
+      <div className="sticky top-16 z-30 bg-zinc-950/95 border-b border-zinc-800 backdrop-blur-md py-3.5">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-6">
+          {/* Quick Anchor Links */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => scrollToSection("grouped-tools")}
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all flex items-center gap-1.5"
+            >
+              <Wrench size={13} /> Grouped Tools ({allToolsCount})
+            </button>
+            <button
+              onClick={() => scrollToSection("action-checklist")}
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-zinc-900 text-zinc-300 border border-zinc-800 hover:bg-zinc-800 transition-all flex items-center gap-1.5"
+            >
+              <Layers size={13} /> Action Checklist
+            </button>
           </div>
-          <div className="w-48 sm:w-72 bg-zinc-800 h-2.5 rounded-full overflow-hidden">
-            <div
-              className="bg-emerald-500 h-full rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${progressPercent}%` }}
-            />
+
+          {/* Progress Indicator */}
+          <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+            <div className="text-xs font-medium text-zinc-400">
+              Checklist:{" "}
+              <span className="text-sm font-bold text-emerald-400">
+                {completedCount} / {totalTasksCount} tasks ({Math.round(progressPercent)}%)
+              </span>
+            </div>
+            <div className="w-32 sm:w-48 bg-zinc-800 h-2 rounded-full overflow-hidden shrink-0">
+              <div
+                className="bg-emerald-500 h-full rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      <main className="max-w-5xl mx-auto px-6 pt-14">
-        {/* Action Plan Overview Box */}
-        {idea.actionPlan && idea.actionPlan.length > 0 && (
-          <div className="mb-16 bg-zinc-900/50 border border-zinc-800/80 rounded-3xl p-8 sm:p-10 relative overflow-hidden backdrop-blur-sm">
-            <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
-            <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
-              <Sparkles size={20} className="text-emerald-400" />
-              <span>Chronological Action Plan</span>
-            </h2>
+      <main className="max-w-6xl mx-auto px-6 pt-10 space-y-20">
+        {/* ========================================================================= */}
+        {/* SECTION 1: CURATED TOOL STACKS GROUPED BY FUNCTION (USER'S MAIN REQUEST) */}
+        {/* ========================================================================= */}
+        <section id="grouped-tools" className="scroll-mt-32">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 pb-6 border-b border-zinc-800">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-3">
+                <Sparkles size={13} />
+                <span>Curated Operating Stacks</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                All Tools Grouped for This Idea
+              </h2>
+              <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-2xl">
+                Every website and software needed to launch, organized by exact function. Click any tool to visit directly.
+              </p>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              {idea.actionPlan.map((step) => (
-                <div
-                  key={step.stepNumber}
-                  className="bg-zinc-950/60 border border-zinc-800 rounded-2xl p-4 text-xs text-zinc-300 flex flex-col justify-between"
-                >
-                  <div className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 font-bold flex items-center justify-center mb-2 border border-emerald-500/20">
-                    {step.stepNumber}
-                  </div>
-                  <div className="font-bold text-white text-sm mb-1.5">{step.title}</div>
-                  <div className="text-zinc-400 leading-relaxed text-xs">{step.description}</div>
-                </div>
-              ))}
+            {/* In-stack Search Input */}
+            <div className="relative w-full md:w-72 shrink-0">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
+              <input
+                type="text"
+                placeholder="Search tools in this stack..."
+                value={toolSearchQuery}
+                onChange={(e) => setToolSearchQuery(e.target.value)}
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-full py-2.5 pl-10 pr-4 text-xs sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition-colors"
+              />
             </div>
           </div>
-        )}
 
-        {/* Phases Accordion List */}
-        <div id="roadmap-phases" className="space-y-8">
-          <h2 className="text-3xl font-extrabold mb-8 text-white flex items-center justify-between">
-            <span>Execution Phases & Toolkits</span>
-            <span className="text-sm font-normal text-zinc-500">
-              Click any phase to expand
-            </span>
-          </h2>
+          {/* Group Filter Navigation Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-hide mb-10">
+            <button
+              onClick={() => setSelectedGroupTag("ALL")}
+              className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shrink-0 transition-all ${
+                selectedGroupTag === "ALL"
+                  ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/20"
+                  : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800 hover:bg-zinc-800"
+              }`}
+            >
+              All Stacks ({allToolsCount})
+            </button>
 
-          {idea.phases?.map((phase, phaseIndex) => {
-            const phaseTasks = phase.tasks || [];
-            const phaseTaskIds = phaseTasks.map((t) => t.id || t.title);
-            const phaseCompletedTasks = phaseTaskIds.filter((id) =>
-              completedTaskIds.includes(id)
-            );
-            const isPhaseDone =
-              phaseTaskIds.length > 0 &&
-              phaseCompletedTasks.length === phaseTaskIds.length;
-            const isOpen = openPhases[phase.position] ?? false;
-
-            return (
-              <div
-                key={phase.title}
-                className={`border rounded-3xl transition-all duration-300 overflow-hidden ${
-                  isPhaseDone
-                    ? "border-emerald-500/40 bg-zinc-900/60"
-                    : "border-zinc-800 bg-zinc-900/40 hover:border-zinc-700"
-                }`}
-              >
-                {/* Phase Header Accordion Toggle */}
+            {resolvedToolGroups.map((group) => {
+              const isSelected = selectedGroupTag === group.tag || selectedGroupTag === group.name;
+              return (
                 <button
-                  onClick={() => togglePhase(phase.position)}
-                  className="w-full text-left p-6 sm:p-8 flex items-center justify-between gap-4 select-none focus:outline-none"
+                  key={group.name}
+                  onClick={() => setSelectedGroupTag(group.tag || group.name)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5 ${
+                    isSelected
+                      ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/20"
+                      : "bg-zinc-900 text-zinc-300 hover:text-white border border-zinc-800 hover:bg-zinc-800"
+                  }`}
                 >
-                  <div className="flex items-start sm:items-center gap-4 sm:gap-6">
-                    {/* Phase Number Badge */}
-                    <div
-                      className={`w-12 h-12 rounded-2xl font-bold flex items-center justify-center shrink-0 text-base transition-colors ${
-                        isPhaseDone
-                          ? "bg-emerald-500 text-white"
-                          : "bg-zinc-800 text-zinc-300 border border-zinc-700"
-                      }`}
-                    >
-                      {isPhaseDone ? <Check size={24} /> : `0${phase.position}`}
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-                          Phase {phase.position}
-                        </span>
-                        {phase.estimatedDuration && (
-                          <span className="text-xs text-zinc-500">
-                            • {phase.estimatedDuration}
-                          </span>
-                        )}
-                        {isPhaseDone && (
-                          <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase">
-                            Phase Completed
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white">
-                        {phase.title}
-                      </h3>
-                      <p className="text-zinc-400 text-sm mt-1 line-clamp-1">
-                        {phase.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    <div className="text-right text-xs font-semibold text-zinc-400 hidden sm:block">
-                      <span>
-                        {phaseCompletedTasks.length}/{phaseTasks.length} tasks
-                      </span>
-                    </div>
-                    <div className="p-2 rounded-xl bg-zinc-800/80 text-zinc-400">
-                      {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                    </div>
-                  </div>
+                  <span className="text-zinc-400 group-hover:text-white">
+                    {getGroupIcon(group.icon || group.tag)}
+                  </span>
+                  <span>{group.name}</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isSelected ? "bg-emerald-600 text-white" : "bg-zinc-800 text-zinc-400"}`}>
+                    {group.tools.length}
+                  </span>
                 </button>
+              );
+            })}
+          </div>
 
-                {/* Expanded Phase Content */}
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="border-t border-zinc-800/80 p-6 sm:p-8 pt-6 space-y-8"
-                    >
-                      {/* What you'll achieve box */}
-                      <div className="p-5 rounded-2xl bg-emerald-500/5 border border-emerald-500/20">
-                        <div className="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1.5">
-                          <Target size={14} />
-                          <span>What you will achieve</span>
+          {/* Render Groups & Cards */}
+          <div className="space-y-12">
+            {filteredToolGroups.length > 0 ? (
+              filteredToolGroups.map((group) => (
+                <div
+                  key={group.name}
+                  className="bg-zinc-950/60 border border-zinc-800/80 rounded-3xl p-6 sm:p-8 relative overflow-hidden backdrop-blur-sm"
+                >
+                  {/* Group Header Banner */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-zinc-800/60">
+                    <div className="flex items-start sm:items-center gap-3.5">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                        {getGroupIcon(group.icon || group.tag)}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-xl sm:text-2xl font-bold text-white">
+                            {group.name}
+                          </h3>
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 font-semibold">
+                            {group.tools.length} tools
+                          </span>
                         </div>
-                        <p className="text-zinc-300 text-base font-medium">
-                          {phase.outcome}
+                        <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+                          {group.description}
                         </p>
                       </div>
+                    </div>
+                  </div>
 
-                      {/* Action Checklist */}
-                      <div>
-                        <h4 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
-                          <span>Action Checklist</span>
-                          <span className="text-xs font-normal text-zinc-500">
-                            Check items to track progress
-                          </span>
-                        </h4>
+                  {/* Tool Cards Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {group.tools.map((tool: IdeaResource) => (
+                      <div
+                        key={tool.name}
+                        className="bg-zinc-900/70 border border-zinc-800 hover:border-emerald-500/50 rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 group hover:bg-zinc-900 hover:shadow-lg"
+                      >
+                        <div>
+                          {/* Card Top: Name & Badges */}
+                          <div className="flex items-start justify-between gap-2 mb-3">
+                            <div>
+                              <h4 className="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors flex items-center gap-2">
+                                <span>{tool.name}</span>
+                              </h4>
+                              {tool.groupName && (
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                                  {tool.groupName}
+                                </span>
+                              )}
+                            </div>
 
-                        <div className="space-y-3">
-                          {phaseTasks.map((task) => {
-                            const taskIdOrTitle = task.id || task.title;
-                            const isDone = completedTaskIds.includes(taskIdOrTitle);
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              {tool.isEssential && (
+                                <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold uppercase tracking-wider">
+                                  Essential
+                                </span>
+                              )}
+                              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[10px] font-semibold">
+                                {tool.pricingModel || "Freemium"}
+                              </span>
+                            </div>
+                          </div>
 
-                            return (
-                              <div
-                                key={task.title}
-                                onClick={() => handleToggleTask(task, phaseIndex)}
-                                className={`flex items-start gap-3.5 p-4 rounded-2xl border cursor-pointer select-none transition-all duration-200 ${
-                                  isDone
-                                    ? "bg-emerald-500/10 border-emerald-500/30 text-zinc-300"
-                                    : "bg-zinc-950/60 border-zinc-800 hover:border-zinc-700 text-zinc-300"
-                                }`}
-                              >
-                                <div
-                                  className={`w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
-                                    isDone
-                                      ? "bg-emerald-500 border-emerald-500 text-white"
-                                      : "border-zinc-600 bg-zinc-900 hover:border-emerald-400"
-                                  }`}
-                                >
-                                  {isDone && <Check size={16} />}
-                                </div>
-                                <div className="flex-1">
-                                  <div
-                                    className={`font-semibold text-sm sm:text-base ${
-                                      isDone ? "line-through text-zinc-400" : "text-white"
-                                    }`}
-                                  >
-                                    {task.title}
-                                  </div>
-                                  {task.description && (
-                                    <div className="text-zinc-500 text-xs sm:text-sm mt-1 leading-relaxed">
-                                      {task.description}
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          })}
+                          {/* Purpose / Execution Guide */}
+                          <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6">
+                            {tool.purpose}
+                          </p>
+                        </div>
+
+                        {/* Card Bottom Actions: Visit & Copy */}
+                        <div className="pt-4 border-t border-zinc-800/70 flex items-center justify-between gap-3 mt-auto">
+                          <button
+                            onClick={() => handleCopyUrl(tool.websiteUrl)}
+                            className="p-2 rounded-xl bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 text-xs font-semibold"
+                            title="Copy Website Link"
+                          >
+                            {copiedUrl === tool.websiteUrl ? (
+                              <>
+                                <CheckCheck size={14} className="text-emerald-400" />
+                                <span className="text-emerald-400">Copied</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy size={14} />
+                                <span>Copy Link</span>
+                              </>
+                            )}
+                          </button>
+
+                          <a
+                            href={tool.websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs flex items-center gap-1.5 transition-all active:scale-95 shadow-sm shadow-emerald-500/10 ml-auto"
+                          >
+                            <span>Visit Site</span>
+                            <ExternalLink size={13} />
+                          </a>
                         </div>
                       </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-16 bg-zinc-900/30 border border-zinc-800 rounded-3xl p-8">
+                <Search className="mx-auto mb-3 text-zinc-500 opacity-60" size={36} />
+                <h4 className="text-lg font-bold text-white mb-1">No tools matched your search</h4>
+                <p className="text-xs sm:text-sm text-zinc-400 mb-4">
+                  Try searching with a broader keyword or reset the group filter.
+                </p>
+                <button
+                  onClick={() => {
+                    setToolSearchQuery("");
+                    setSelectedGroupTag("ALL");
+                  }}
+                  className="px-5 py-2 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
 
-                      {/* Curated Resources for this phase */}
-                      {phase.resources && phase.resources.length > 0 && (
+        {/* ========================================================================= */}
+        {/* SECTION 2: STEP-BY-STEP EXECUTION BLUEPRINT & TASK CHECKLIST              */}
+        {/* ========================================================================= */}
+        <section id="action-checklist" className="scroll-mt-32 pt-8 border-t border-zinc-900">
+          <div className="mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-teal-500/10 text-teal-400 border border-teal-500/20 mb-3">
+              <Layers size={13} />
+              <span>Step-by-Step Roadmap</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Action Plan & Phase Checklists
+            </h2>
+            <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-2xl">
+              Track your execution milestones from initial validation to final monetization. Check items as you complete them.
+            </p>
+          </div>
+
+          {/* Action Plan Overview Box */}
+          {idea.actionPlan && idea.actionPlan.length > 0 && (
+            <div className="mb-12 bg-zinc-900/50 border border-zinc-800/80 rounded-3xl p-6 sm:p-8 relative overflow-hidden backdrop-blur-sm">
+              <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
+              <h3 className="text-xl font-bold mb-5 text-white flex items-center gap-2">
+                <Sparkles size={18} className="text-emerald-400" />
+                <span>Chronological Execution Path</span>
+              </h3>
+
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-3.5">
+                {idea.actionPlan.map((step) => (
+                  <div
+                    key={step.stepNumber}
+                    className="bg-zinc-950/60 border border-zinc-800 rounded-2xl p-4 text-xs text-zinc-300 flex flex-col justify-between"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 font-bold flex items-center justify-center mb-2 border border-emerald-500/20">
+                      {step.stepNumber}
+                    </div>
+                    <div className="font-bold text-white text-sm mb-1.5">{step.title}</div>
+                    <div className="text-zinc-400 leading-relaxed text-xs">{step.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Phases Accordion List */}
+          <div className="space-y-6">
+            {idea.phases?.map((phase, phaseIndex) => {
+              const phaseTasks = phase.tasks || [];
+              const phaseTaskIds = phaseTasks.map((t) => t.id || t.title);
+              const phaseCompletedTasks = phaseTaskIds.filter((id) =>
+                completedTaskIds.includes(id)
+              );
+              const isPhaseDone =
+                phaseTaskIds.length > 0 &&
+                phaseCompletedTasks.length === phaseTaskIds.length;
+              const isOpen = openPhases[phase.position] ?? false;
+
+              return (
+                <div
+                  key={phase.title}
+                  className={`border rounded-3xl transition-all duration-300 overflow-hidden ${
+                    isPhaseDone
+                      ? "border-emerald-500/40 bg-zinc-900/60"
+                      : "border-zinc-800 bg-zinc-900/40 hover:border-zinc-700"
+                  }`}
+                >
+                  {/* Phase Header Accordion Toggle */}
+                  <button
+                    onClick={() => togglePhase(phase.position)}
+                    className="w-full text-left p-6 sm:p-7 flex items-center justify-between gap-4 select-none focus:outline-none"
+                  >
+                    <div className="flex items-start sm:items-center gap-4 sm:gap-6">
+                      {/* Phase Number Badge */}
+                      <div
+                        className={`w-12 h-12 rounded-2xl font-bold flex items-center justify-center shrink-0 text-base transition-colors ${
+                          isPhaseDone
+                            ? "bg-emerald-500 text-white"
+                            : "bg-zinc-800 text-zinc-300 border border-zinc-700"
+                        }`}
+                      >
+                        {isPhaseDone ? <Check size={24} /> : `0${phase.position}`}
+                      </div>
+
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                            Phase {phase.position}
+                          </span>
+                          {phase.estimatedDuration && (
+                            <span className="text-xs text-zinc-500">
+                              • {phase.estimatedDuration}
+                            </span>
+                          )}
+                          {isPhaseDone && (
+                            <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase">
+                              Phase Completed
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white">
+                          {phase.title}
+                        </h3>
+                        <p className="text-zinc-400 text-sm mt-1 line-clamp-1">
+                          {phase.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="text-right text-xs font-semibold text-zinc-400 hidden sm:block">
+                        <span>
+                          {phaseCompletedTasks.length}/{phaseTasks.length} tasks
+                        </span>
+                      </div>
+                      <div className="p-2 rounded-xl bg-zinc-800/80 text-zinc-400">
+                        {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Expanded Phase Content */}
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="border-t border-zinc-800/80 p-6 sm:p-8 pt-6 space-y-8"
+                      >
+                        {/* What you'll achieve box */}
+                        <div className="p-5 rounded-2xl bg-emerald-500/5 border border-emerald-500/20">
+                          <div className="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1.5">
+                            <Target size={14} />
+                            <span>What you will achieve</span>
+                          </div>
+                          <p className="text-zinc-300 text-sm sm:text-base font-medium">
+                            {phase.outcome}
+                          </p>
+                        </div>
+
+                        {/* Action Checklist */}
                         <div>
                           <h4 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
-                            <span>Handpicked Tools for this Phase</span>
+                            <span>Action Checklist</span>
                             <span className="text-xs font-normal text-zinc-500">
-                              Direct official links
+                              Check items to track progress
                             </span>
                           </h4>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {phase.resources.map((res) => (
-                              <a
-                                key={res.name}
-                                href={res.websiteUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group/res block p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800/90 hover:border-emerald-500/50 hover:bg-zinc-900 transition-all duration-200 flex flex-col justify-between"
-                              >
-                                <div>
-                                  <div className="flex items-start justify-between gap-2 mb-3">
-                                    <div className="font-bold text-base text-white group-hover/res:text-emerald-400 transition-colors flex items-center gap-1.5">
-                                      <span>{res.name}</span>
-                                    </div>
-                                    <ExternalLink
-                                      size={15}
-                                      className="text-zinc-500 group-hover/res:text-emerald-400 transition-colors shrink-0"
-                                    />
+                          <div className="space-y-3">
+                            {phaseTasks.map((task) => {
+                              const taskIdOrTitle = task.id || task.title;
+                              const isDone = completedTaskIds.includes(taskIdOrTitle);
+
+                              return (
+                                <div
+                                  key={task.title}
+                                  onClick={() => handleToggleTask(task, phaseIndex)}
+                                  className={`flex items-start gap-3.5 p-4 rounded-2xl border cursor-pointer select-none transition-all duration-200 ${
+                                    isDone
+                                      ? "bg-emerald-500/10 border-emerald-500/30 text-zinc-300"
+                                      : "bg-zinc-950/60 border-zinc-800 hover:border-zinc-700 text-zinc-300"
+                                  }`}
+                                >
+                                  <div
+                                    className={`w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                                      isDone
+                                        ? "bg-emerald-500 border-emerald-500 text-white"
+                                        : "border-zinc-600 bg-zinc-900 hover:border-emerald-400"
+                                    }`}
+                                  >
+                                    {isDone && <Check size={16} />}
                                   </div>
-
-                                  <p className="text-xs text-zinc-400 mb-4 leading-relaxed line-clamp-3">
-                                    {res.purpose}
-                                  </p>
+                                  <div className="flex-1">
+                                    <div
+                                      className={`font-semibold text-sm sm:text-base ${
+                                        isDone ? "line-through text-zinc-400" : "text-white"
+                                      }`}
+                                    >
+                                      {task.title}
+                                    </div>
+                                    {task.description && (
+                                      <div className="text-zinc-500 text-xs sm:text-sm mt-1 leading-relaxed">
+                                        {task.description}
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
-
-                                <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-zinc-800/60 text-xs">
-                                  <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-semibold">
-                                    {res.pricingModel}
-                                  </span>
-                                  {res.hasFreeTier && (
-                                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
-                                      Free Tier
-                                    </span>
-                                  )}
-                                  {res.isEssential && (
-                                    <span className="text-zinc-500 ml-auto font-medium">
-                                      Essential
-                                    </span>
-                                  )}
-                                </div>
-                              </a>
-                            ))}
+                              );
+                            })}
                           </div>
                         </div>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
+
+                        {/* Handpicked Tools for this Phase */}
+                        {phase.resources && phase.resources.length > 0 && (
+                          <div>
+                            <h4 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
+                              <span>Handpicked Tools for this Phase</span>
+                              <span className="text-xs font-normal text-zinc-500">
+                                Direct official links
+                              </span>
+                            </h4>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                              {phase.resources.map((res) => (
+                                <a
+                                  key={res.name}
+                                  href={res.websiteUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="group/res block p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800/90 hover:border-emerald-500/50 hover:bg-zinc-900 transition-all duration-200 flex flex-col justify-between"
+                                >
+                                  <div>
+                                    <div className="flex items-start justify-between gap-2 mb-3">
+                                      <div className="font-bold text-base text-white group-hover/res:text-emerald-400 transition-colors flex items-center gap-1.5">
+                                        <span>{res.name}</span>
+                                      </div>
+                                      <ExternalLink
+                                        size={15}
+                                        className="text-zinc-500 group-hover/res:text-emerald-400 transition-colors shrink-0"
+                                      />
+                                    </div>
+
+                                    <p className="text-xs text-zinc-400 mb-4 leading-relaxed line-clamp-3">
+                                      {res.purpose}
+                                    </p>
+                                  </div>
+
+                                  <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-zinc-800/60 text-xs">
+                                    <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-semibold">
+                                      {res.pricingModel}
+                                    </span>
+                                    {res.hasFreeTier && (
+                                      <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
+                                        Free Tier
+                                      </span>
+                                    )}
+                                    {res.isEssential && (
+                                      <span className="text-zinc-500 ml-auto font-medium">
+                                        Essential
+                                      </span>
+                                    )}
+                                  </div>
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </section>
       </main>
     </div>
   );

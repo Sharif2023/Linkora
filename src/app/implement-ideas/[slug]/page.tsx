@@ -81,6 +81,7 @@ export default async function ImplementIdeaDetailPage(props: {
             position: r.position,
           })),
         })),
+        toolGroups: IMPLEMENTATION_IDEAS.find((i) => i.slug === dbIdea.slug)?.toolGroups || [],
       };
     }
   } catch (error) {
