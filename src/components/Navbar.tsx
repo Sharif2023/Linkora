@@ -55,7 +55,7 @@ export default function Navbar() {
                 <span className="text-sm font-semibold hidden md:block">Dashboard</span>
               </Link>
               <button
-                onClick={() => signOut()}
+                onClick={() => signOut({ callbackUrl: '/' })}
                 className="text-zinc-500 hover:text-rose-400 transition-colors"
                 title="Logout"
               >
