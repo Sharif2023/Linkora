@@ -42,11 +42,19 @@ export default function Navbar() {
             <div className="w-8 h-8 rounded-full border-2 border-zinc-800 border-t-emerald-500 animate-spin"></div>
           ) : session ? (
             <div className="flex items-center gap-4 border-l border-zinc-800 pl-6 ml-2">
+              {(session.user as any)?.role === "ADMIN" && (
+                <Link
+                  href="/admin"
+                  className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors hidden md:block"
+                >
+                  Admin
+                </Link>
+              )}
               <Link href="/dashboard" className="text-zinc-400 hover:text-white transition-colors flex items-center gap-2">
                 <User size={18} />
                 <span className="text-sm font-semibold hidden md:block">Dashboard</span>
               </Link>
-              <button 
+              <button
                 onClick={() => signOut()}
                 className="text-zinc-500 hover:text-rose-400 transition-colors"
                 title="Logout"
