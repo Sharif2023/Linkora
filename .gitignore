@@ -44,6 +44,7 @@ next-env.d.ts
 
 collection.txt
 project.txt
+project-dump.txt
 
 /src/generated/prisma
-project.txt
+
