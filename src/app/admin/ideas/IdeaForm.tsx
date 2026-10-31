@@ -45,7 +45,7 @@ export default function IdeaForm({
   initialIdea,
 }: {
   mode: "create" | "edit";
-  initialIdea?: any;
+  initialIdea?: any; // Server component data can be loosely typed here
 }) {
   const router = useRouter();
   const [form, setForm] = useState<IdeaPayload>(() => {
@@ -200,8 +200,12 @@ export default function IdeaForm({
       if (!res.ok) throw new Error(data.message || "Failed to save");
       router.push("/admin/ideas");
       router.refresh();
-    } catch (e: any) {
-      setError(e.message || "Failed to save");
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError("Failed to save");
+      }
     } finally {
       setBusy(false);
     }
@@ -224,7 +228,7 @@ export default function IdeaForm({
 
         <div className="grid grid-cols-3 gap-4">
           <Field label="Difficulty">
-            <select className={I} value={form.difficulty} onChange={(e) => update({ difficulty: e.target.value as any })}>
+            <select className={I} value={form.difficulty} onChange={(e) => update({ difficulty: e.target.value as IdeaPayload["difficulty"] })}>
               <option>Beginner</option><option>Intermediate</option><option>Advanced</option>
             </select>
           </Field>
@@ -234,13 +238,13 @@ export default function IdeaForm({
 
         <div className="grid grid-cols-2 gap-4">
           <Field label="Category">
-            <select className={I} value={form.category} onChange={(e) => update({ category: e.target.value as any })}>
+            <select className={I} value={form.category} onChange={(e) => update({ category: e.target.value as IdeaPayload["category"] })}>
               <option>Creator Economy</option><option>SaaS & Startups</option><option>Freelancing & Business</option>
               <option>Content & Media</option><option>Digital Products</option>
             </select>
           </Field>
           <Field label="Status">
-            <select className={I} value={form.status} onChange={(e) => update({ status: e.target.value as any })}>
+            <select className={I} value={form.status} onChange={(e) => update({ status: e.target.value as IdeaPayload["status"] })}>
               <option>PUBLISHED</option><option>DRAFT</option><option>ARCHIVED</option>
             </select>
           </Field>
@@ -309,11 +313,26 @@ export default function IdeaForm({
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────
+
+// define the props for the PhaseEditor component
+interface PhaseEditorProps {
+  index: number;
+  phase: Phase;
+  onUpdate: (patch: Partial<Phase>) => void;
+  onRemove: () => void;
+  onAddTask: () => void;
+  onUpdateTask: (ti: number, patch: Partial<Task>) => void;
+  onRemoveTask: (ti: number) => void;
+  onAddResource: () => void;
+  onUpdateResource: (ri: number, patch: Partial<PResource>) => void;
+  onRemoveResource: (ri: number) => void;
+}
+
 function PhaseEditor({
   index, phase, onUpdate, onRemove,
   onAddTask, onUpdateTask, onRemoveTask,
   onAddResource, onUpdateResource, onRemoveResource,
-}: any) {
+}: PhaseEditorProps) {
   const [open, setOpen] = useState(true);
   return (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl">
@@ -344,7 +363,7 @@ function PhaseEditor({
               </button>
             </div>
             <div className="space-y-2">
-              {phase.tasks.map((t: any, ti: number) => (
+              {phase.tasks.map((t, ti) => (
                 <div key={ti} className="grid grid-cols-[2fr_3fr_auto_auto] gap-2 items-center bg-zinc-950 border border-zinc-800 rounded-lg p-2">
                   <input className={I} placeholder="Task title" value={t.title} onChange={(e) => onUpdateTask(ti, { title: e.target.value })} />
                   <input className={I} placeholder="Description" value={t.description} onChange={(e) => onUpdateTask(ti, { description: e.target.value })} />
@@ -367,7 +386,7 @@ function PhaseEditor({
               </button>
             </div>
             <div className="space-y-2">
-              {phase.resources.map((r: any, ri: number) => (
+              {phase.resources.map((r, ri) => (
                 <div key={ri} className="space-y-2 bg-zinc-950 border border-zinc-800 rounded-lg p-3">
                   <div className="grid grid-cols-[1fr_1fr_auto] gap-2 items-center">
                     <input className={I} placeholder="Tool name" value={r.name} onChange={(e) => onUpdateResource(ri, { name: e.target.value })} />
@@ -376,7 +395,7 @@ function PhaseEditor({
                   </div>
                   <input className={I} placeholder="Purpose" value={r.purpose} onChange={(e) => onUpdateResource(ri, { purpose: e.target.value })} />
                   <div className="flex items-center gap-4 text-xs">
-                    <select className={I + " max-w-[120px]"} value={r.pricingModel} onChange={(e) => onUpdateResource(ri, { pricingModel: e.target.value })}>
+                    <select className={I + " max-w-[120px]"} value={r.pricingModel} onChange={(e) => onUpdateResource(ri, { pricingModel: e.target.value as PResource["pricingModel"] })}>
                       <option>Free</option><option>Freemium</option><option>Paid</option>
                     </select>
                     <label className="flex items-center gap-1"><input type="checkbox" checked={r.hasFreeTier} onChange={(e) => onUpdateResource(ri, { hasFreeTier: e.target.checked })} /> Free tier</label>
