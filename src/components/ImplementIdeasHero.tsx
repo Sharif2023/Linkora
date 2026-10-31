@@ -1,7 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Compass, Rocket, Layers, CheckCircle2 } from "lucide-react";
+import { 
+  Sparkles, 
+  Compass, 
+  Rocket, 
+  Layers, 
+  CheckCircle2,
+  Globe,
+  Video,
+  Zap,
+  Briefcase,
+  Mic,
+  Package,
+  type LucideIcon 
+} from "lucide-react";
 
 interface ImplementIdeasHeroProps {
   totalIdeas: number;
@@ -13,13 +26,14 @@ interface ImplementIdeasHeroProps {
   onSearchChange: (query: string) => void;
 }
 
-const CATEGORIES: { label: string; value: string; icon: string }[] = [
-  { label: "All Ambitions", value: "ALL", icon: "✨" },
-  { label: "Creator Economy", value: "Creator Economy", icon: "🎬" },
-  { label: "SaaS & Startups", value: "SaaS & Startups", icon: "⚡" },
-  { label: "Freelancing & Business", value: "Freelancing & Business", icon: "💼" },
-  { label: "Content & Media", value: "Content & Media", icon: "🎙️" },
-  { label: "Digital Products", value: "Digital Products", icon: "📦" },
+// Use LucideIcon type instead of string for icons
+const CATEGORIES: { label: string; value: string; icon: LucideIcon }[] = [
+  { label: "All Ambitions", value: "ALL", icon: Globe },
+  { label: "Creator Economy", value: "Creator Economy", icon: Video },
+  { label: "SaaS & Startups", value: "SaaS & Startups", icon: Zap },
+  { label: "Freelancing & Business", value: "Freelancing & Business", icon: Briefcase },
+  { label: "Content & Media", value: "Content & Media", icon: Mic },
+  { label: "Digital Products", value: "Digital Products", icon: Package },
 ];
 
 export default function ImplementIdeasHero({
@@ -107,6 +121,8 @@ export default function ImplementIdeasHero({
         >
           {CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat.value;
+            const Icon = cat.icon; // Dynamically load the icon component
+
             return (
               <button
                 key={cat.value}
@@ -117,7 +133,7 @@ export default function ImplementIdeasHero({
                     : "bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800/80"
                 }`}
               >
-                <span>{cat.icon}</span>
+                <Icon size={16} className={isActive ? "text-white" : "text-zinc-500"} />
                 <span>{cat.label}</span>
               </button>
             );
